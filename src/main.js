@@ -4,6 +4,8 @@ import App from './App'
 import router from '@router/index.js'
 import store from '@store/index.js'
 import 'ant-design-vue/dist/antd.css'
+import '@style/ant-style.scss'
+
 import '@/vab'
 
 const app = createApp(App)

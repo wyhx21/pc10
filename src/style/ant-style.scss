@@ -1,0 +1,32 @@
+@import '@style/variable.scss';
+
+.ant-modal-content {
+
+  .ant-modal-header {
+    padding: 8px 24px;
+  }
+
+  .ant-modal-close {
+    .ant-modal-close-x {
+      height: 38px;
+      line-height: 38px;
+    }
+  }
+
+  .ant-modal-body {
+    padding: 8px 24px;
+  }
+
+  .ant-modal-footer {
+    padding: 8px 16px;
+    button {
+      border-radius: 12px;
+    }
+  }
+}
+
+.ant-form {
+  .ant-form-item {
+    margin-bottom: 0px;
+  }
+}
