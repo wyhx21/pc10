@@ -13,7 +13,13 @@
         Primary
       </a-button>
     </template>
-    这个是内容
+    <div>内容</div>
+    <div>内容</div>
+    <div>内容</div>
+    <div>内容</div>
+    <div>内容</div>
+    <div>内容</div>
+    <div>内容</div>
     <template #footer>dixdddsfxd</template>
   </app-container>
 </template>

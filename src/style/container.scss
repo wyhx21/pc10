@@ -1,9 +1,9 @@
 @import '@style/variable.scss';
 
 .app-con {
-  height: 100%;
   display: flex;
   flex-direction: column;
+  position: relative;
 }
 
 .app-con-qurey {
@@ -17,4 +17,5 @@
 
 .app-con-main {
   flex: 1;
+  overflow: auto;
 }

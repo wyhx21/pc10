@@ -1,5 +1,5 @@
 <template>
-  <a-layout-content class="vab-content">
+  <a-layout-content class="vab-content" id="app-ant-content">
     <router-view v-slot="{ Component }">
       <transition mode="out-in" name="fade-transform">
         <component :is="Component" />
