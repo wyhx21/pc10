@@ -3,9 +3,12 @@
  */
 const setting = {
   //开发以及部署时的URL，hash模式时在不确定二级目录名称的情况下建议使用""代表相对路径或者"/二级目录/"，history模式默认使用"/"或者"/二级目录/"
-  publicPath: '/PC/',
+  publicPath: process.env.NODE_ENV === 'development' ? '/' : '/PC/',
   //生产环境构建文件的目录名
-  outputDir: 'C:/Users/w/Desktop/demo/web/app/PC',
+  outputDir:
+    process.env.NODE_ENV === 'development'
+      ? 'dist'
+      : 'C:/Users/w/Desktop/demo/web/app/PC',
   //放置生成的静态资源 (js、css、img、fonts) 的 (相对于 outputDir 的) 目录。
   assetsDir: 'static',
   //开发环境每次保存时是否输出为eslint编译警告

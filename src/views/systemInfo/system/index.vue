@@ -14,23 +14,21 @@
       </a-button>
     </template>
     这个是内容
-    <template #footer>
-      dixdddsfxd
-    </template>
+    <template #footer>dixdddsfxd</template>
   </app-container>
 </template>
 <script>
-import appContainer from '@com/container.vue'
-import { SearchOutlined } from '@ant-design/icons-vue';
-export default {
-  components: {
-    appContainer,
-    SearchOutlined
-  },
-  data () {
-    return {
-      value: '',
-    }
+  import appContainer from '@com/container.vue'
+  import { SearchOutlined } from '@ant-design/icons-vue'
+  export default {
+    components: {
+      appContainer,
+      SearchOutlined,
+    },
+    data() {
+      return {
+        value: '',
+      }
+    },
   }
-}
 </script>
