@@ -28,7 +28,7 @@ const setting = {
   //简写
   abbreviation: 'vab-pro',
   //开发环境端口号
-  devPort: '9001',
+  devPort: '9999',
   //开发环境代理
   proxyTarget: 'http://localhost:8080',
   //版本号

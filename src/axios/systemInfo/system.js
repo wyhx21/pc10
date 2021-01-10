@@ -4,4 +4,6 @@ const queryPage = (data) => axios.doPost('system/system/query', data)
 
 const querySysMenu = (sysId) => axios.doGet(`/system/system/sysMenu/${sysId}`)
 
-export { queryPage, querySysMenu }
+const mergeRecord = (data) => axios.doPost(`/system/system/merge`, data)
+
+export { queryPage, querySysMenu, mergeRecord }

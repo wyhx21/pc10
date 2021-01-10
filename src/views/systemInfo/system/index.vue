@@ -67,15 +67,25 @@
         >
           上一步
         </a-button>
-        <a-button
-          size="small"
-          type="primary"
-          @click="confirmData"
+        <a-popconfirm
+          title="确认保存该记录？"
+          ok-text="确认"
+          cancel-text="取消"
+          @confirm="confirmData"
           v-if="model.editComponent == 'AppMenuEditor'"
         >
-          确认
-        </a-button>
-        <a-button size="small" @click="model.visible = false">取消</a-button>
+          <a-button size="small" type="primary" :loading="loading.merge">
+            确认
+          </a-button>
+        </a-popconfirm>
+        <a-popconfirm
+          title="确认取消该记录修改？"
+          ok-text="确认"
+          cancel-text="取消"
+          @confirm="model.visible = false"
+        >
+          <a-button size="small">取消</a-button>
+        </a-popconfirm>
       </template>
     </a-modal>
   </app-container>
@@ -107,20 +117,37 @@
         },
         loading: {
           query: false,
+          merge: false,
         },
         model: {
           visible: false,
           editComponent: '',
         },
         columns: [
-          { title: '系统编码', key: 'sysCode', dataIndex: 'sysCode' },
-          { title: '系统名称', key: 'sysName', dataIndex: 'sysName' },
-          { title: '状态', key: 'enable', dataIndex: 'enable' },
-          { title: '备注', key: 'remark', dataIndex: 'remark' },
+          {
+            title: '系统编码',
+            key: 'sysCode',
+            dataIndex: 'sysCode',
+            width: 150,
+          },
+          {
+            title: '系统名称',
+            key: 'sysName',
+            dataIndex: 'sysName',
+            width: 150,
+          },
+          { title: '状态', key: 'enable', dataIndex: 'enable', width: 150 },
+          {
+            title: '备注',
+            key: 'remark',
+            dataIndex: 'remark',
+            ellipsis: true,
+          },
           {
             title: '更新人',
             key: 'lastModifiedBy',
             dataIndex: 'lastModifiedBy',
+            width: 150,
           },
           {
             title: '更新时间',
@@ -132,6 +159,7 @@
             title: '操作',
             key: 'id',
             dataIndex: 'id',
+            width: 50,
             slots: { customRender: 'action' },
           },
         ],
@@ -143,6 +171,7 @@
     methods: {
       ...mapActions({
         queryPage: 'appSystemInfo/system/queryPage',
+        mergeRecode: 'appSystemInfo/system/mergeRecode',
       }),
       ...mapMutations({
         setParam: 'appSystemInfo/system/queryParam',
@@ -176,7 +205,16 @@
         this.model.editComponent = 'AppMenuEditor'
       },
       confirmData() {
-        this.model.visible = false
+        this.loading.merge = true
+        this.mergeRecode()
+          .then(() => {
+            this.model.visible = false
+            this.loading.merge = false
+            this.queryData()
+          })
+          .catch(() => {
+            this.loading.merge = false
+          })
       },
     },
   }

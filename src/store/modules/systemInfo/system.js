@@ -1,5 +1,9 @@
-import { queryPage, querySysMenu } from '@axios/systemInfo/system.js'
-
+import {
+  queryPage,
+  querySysMenu,
+  mergeRecord as meregeData,
+} from '@axios/systemInfo/system.js'
+import { treeSelectUtil } from '@utils/commonUtil.js'
 export default {
   namespaced: true,
   state: {
@@ -9,10 +13,7 @@ export default {
     },
     dataList: [],
     currentData: {},
-    sysMenu: {
-      trees: [],
-      idList: [],
-    },
+    menuIdList: [],
   },
   getters: {
     dataList: (_state) => _state.dataList,
@@ -30,15 +31,14 @@ export default {
       return arr.includes('system_setting_persist')
     },
     currentData: (_state) => _state.currentData,
-    sysMenuTrees: (_state) => _state.sysMenu.trees,
-    sysMenuIds: (_state) => _state.sysMenu.idList,
+    menuIdList: (_state) => _state.menuIdList,
   },
   mutations: {
     queryParam: (_state, params = {}) => (_state.params = params),
     dataList: (_state, list = []) => (_state.dataList = list),
     currentData: (_state, data = {}) => (_state.currentData = data),
-    sysMenu: (_state, { trees = [], idList = [] }) =>
-      (_state.sysMenu = { trees, idList }),
+    menuIdList: (_state, idList = []) =>
+      (_state.menuIdList = idList.filter((item) => item != 1)),
   },
   actions: {
     queryPage: async ({ commit, getters }) => {
@@ -54,13 +54,28 @@ export default {
           })
       })
     },
-    sysMenu: async ({ getters }) => {
+    sysMenu: async ({ getters, commit }) => {
       const sysId = getters.currentData['id']
-      querySysMenu(sysId)
-        .then((res) => {
-          console.log(res)
-        })
-        .catch(() => {})
+      return new Promise((resolve, reject) => {
+        querySysMenu(sysId)
+          .then((res) => {
+            const { menuIds, trees } = res
+            commit('menuIdList', menuIds)
+            const idList = treeSelectUtil(trees, menuIds)
+            resolve({ trees, idList })
+          })
+          .catch(() => reject())
+      })
+    },
+    mergeRecode: async ({ getters }) => {
+      let { id, deleted, remark, sysCode, sysName } = getters.currentData
+      let menuIdList = getters.menuIdList
+      const data = { menuIdList, id, deleted, remark, sysCode, sysName }
+      return new Promise((resolve, reject) => {
+        meregeData(data)
+          .then(() => resolve())
+          .catch(() => reject)
+      })
     },
   },
 }
