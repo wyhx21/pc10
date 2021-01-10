@@ -2,6 +2,7 @@ import {
   queryPage,
   querySysMenu,
   mergeRecord as meregeData,
+  persistRecord,
 } from '@axios/systemInfo/system.js'
 import { treeSelectUtil } from '@utils/commonUtil.js'
 export default {
@@ -13,6 +14,7 @@ export default {
     },
     dataList: [],
     currentData: {},
+    roleInfo: {},
     menuIdList: [],
   },
   getters: {
@@ -31,12 +33,14 @@ export default {
       return arr.includes('system_setting_persist')
     },
     currentData: (_state) => _state.currentData,
+    roleInfo: (_state) => _state.roleInfo,
     menuIdList: (_state) => _state.menuIdList,
   },
   mutations: {
     queryParam: (_state, params = {}) => (_state.params = params),
     dataList: (_state, list = []) => (_state.dataList = list),
     currentData: (_state, data = {}) => (_state.currentData = data),
+    roleInfo: (_state, data = {}) => (_state.roleInfo = data),
     menuIdList: (_state, idList = []) =>
       (_state.menuIdList = idList.filter((item) => item != 1)),
   },
@@ -76,6 +80,26 @@ export default {
           .then(() => resolve())
           .catch(() => reject)
       })
+    },
+    persistReocrd: async ({ getters }) => {
+      let { deleted, remark: sysRemark, sysCode, sysName } = getters.currentData
+      let { roleCode, roleName, remark: roleRemark } = getters.roleInfo
+      let menuIds = getters.menuIdList
+      const data = {
+        menuIds,
+        roleInfo: {
+          roleCode,
+          roleName,
+          remark: roleRemark,
+        },
+        sysInfo: {
+          deleted,
+          remark: sysRemark,
+          sysCode,
+          sysName,
+        },
+      }
+      return persistRecord(data)
     },
   },
 }
