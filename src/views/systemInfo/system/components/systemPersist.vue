@@ -7,7 +7,7 @@
       <a-input v-model:value="currentData.sysName" placeholder="系统名称" />
     </a-form-item>
     <a-form-item label="是否有效">
-      <a-switch v-model:checked="currentData.deleted" />
+      <app-switch v-model="currentData.deleted" />
     </a-form-item>
     <a-form-item label="备注信息">
       <a-textarea
@@ -23,8 +23,11 @@
 </template>
 <script>
   import { mapMutations, mapGetters } from 'vuex'
+  import AppSwitch from '@com/switch'
   export default {
-    components: {},
+    components: {
+      AppSwitch,
+    },
     computed: {
       ...mapGetters({
         editData: 'appSystemInfo/system/currentData',

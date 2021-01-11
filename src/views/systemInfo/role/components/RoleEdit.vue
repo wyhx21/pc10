@@ -1,17 +1,27 @@
 <template>
   <a-form layout="vertical" :model="currentData" class="app-edit-form_1">
-    <a-form-item label="系统编码">
+    <a-form-item label="角色编码">
       <a-input
-        v-model:value="currentData.sysCode"
-        placeholder="系统编码"
+        v-model:value="currentData.roleCode"
+        placeholder="角色编码"
         disabled
       />
     </a-form-item>
-    <a-form-item label="系统名称">
-      <a-input v-model:value="currentData.sysName" placeholder="系统名称" />
+    <a-form-item label="角色名称">
+      <a-input v-model:value="currentData.roleName" placeholder="角色名称" />
+    </a-form-item>
+    <a-form-item label="角色类型">
+      <a-input
+        v-model:value="currentData.roleTypeValue"
+        placeholder="角色类型"
+        disabled
+      />
     </a-form-item>
     <a-form-item label="是否有效">
-      <app-switch v-model="currentData.deleted" />
+      <app-switch
+        v-model="currentData.deleted"
+        :disabled="currentData.roleType != 2"
+      />
     </a-form-item>
     <a-form-item label="备注信息">
       <a-textarea
@@ -34,7 +44,7 @@
     },
     computed: {
       ...mapGetters({
-        editData: 'appSystemInfo/system/currentData',
+        editData: 'appSystemInfo/role/currentData',
       }),
     },
     watch: {
@@ -52,7 +62,7 @@
     },
     methods: {
       ...mapMutations({
-        setEditData: 'appSystemInfo/system/currentData',
+        setEditData: 'appSystemInfo/role/currentData',
       }),
       submit() {
         this.setEditData(this.currentData)

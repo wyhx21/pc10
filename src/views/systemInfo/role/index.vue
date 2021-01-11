@@ -35,22 +35,20 @@
       size="small"
       :pagination="false"
     >
+      <template #deleted="{ text }">
+        <app-switch :modelValue="text" disabled />
+      </template>
       <template #action="{ record }">
         <a @click="editRecord(record)" v-if="perMerge"><EditOutlined /></a>
         <a-divider
           type="vertical"
-          v-if="
-            perMerge &&
-            perDelete &&
-            record.roleType != 0 &&
-            record.roleType != 1
-          "
+          v-if="perMerge && perDelete && record.roleType == 2"
         />
         <a-popconfirm
           title="确认删除该记录新增？"
           ok-text="确认"
           cancel-text="取消"
-          v-if="perDelete && record.roleType != 0 && record.roleType != 1"
+          v-if="perDelete && record.roleType == 2"
           @confirm="deleteRecord(record)"
         >
           <a><DeleteOutlined /></a>
@@ -61,12 +59,38 @@
     <template #footer>
       <app-pagination :total="totalPageSize" @change="onPageChange" />
     </template>
+
+    <!-- 系统编辑 begin -->
+    <a-modal
+      v-model:visible="merge.visible"
+      title="角色编辑"
+      width="400px"
+      :maskClosable="false"
+    >
+      <div style="height: 420px; overflow: auto">
+        <component :ref="`refSystem${merge.component}`" :is="merge.component" />
+      </div>
+
+      <template #footer>
+        <a-popconfirm
+          title="确认取消该记录修改？"
+          ok-text="确认"
+          cancel-text="取消"
+          @confirm="merge.visible = false"
+        >
+          <a-button size="small">取消</a-button>
+        </a-popconfirm>
+      </template>
+    </a-modal>
+    <!-- 系统编辑 end -->
   </app-container>
 </template>
 <script>
   import { mapGetters, mapMutations, mapActions } from 'vuex'
-  import AppContainer from '@com/container.vue'
-  import AppPagination from '@com/pagination.vue'
+  import AppContainer from '@com/container'
+  import AppPagination from '@com/pagination'
+  import AppEdit from './components/RoleEdit'
+  import AppSwitch from '@com/switch'
   import {
     RedoOutlined,
     SearchOutlined,
@@ -81,6 +105,8 @@
       SearchOutlined,
       EditOutlined,
       DeleteOutlined,
+      AppEdit,
+      AppSwitch,
     },
     computed: {
       ...mapGetters({
@@ -110,11 +136,20 @@
         loading: {
           query: false,
         },
+        merge: {
+          visible: false,
+          component: '',
+        },
         columns: [
           { title: '角色编码', dataIndex: 'roleCode', width: 150 },
           { title: '角色名称', dataIndex: 'roleName', width: 150 },
           { title: '角色类型', dataIndex: 'roleTypeValue', width: 150 },
-          { title: '状态', dataIndex: 'enable', width: 150 },
+          {
+            title: '状态',
+            dataIndex: 'deleted',
+            width: 150,
+            slots: { customRender: 'deleted' },
+          },
           { title: '备注信息', dataIndex: 'remark', ellipsis: true },
           { title: '更新人', dataIndex: 'lastModifiedBy', width: 150 },
           { title: '更新时间', dataIndex: 'lastModifiedDate', width: 200 },
@@ -134,6 +169,7 @@
       ...mapMutations({
         pageInfo: 'appSystemInfo/role/pageInfo',
         queryParam: 'appSystemInfo/role/queryParam',
+        currentData: 'appSystemInfo/role/currentData',
       }),
       ...mapActions({
         queryPage: 'appSystemInfo/role/queryPage',
@@ -160,7 +196,11 @@
           roleName: '',
         }
       },
-      editRecord() {},
+      editRecord(record) {
+        this.currentData(record)
+        this.merge.component = 'AppEdit'
+        this.merge.visible = true
+      },
       deleteRecord({ id }) {
         this.dataDelete(id)
       },

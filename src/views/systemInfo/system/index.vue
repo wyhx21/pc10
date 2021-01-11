@@ -44,6 +44,9 @@
       size="small"
       :pagination="false"
     >
+      <template #deleted="{ text }">
+        <app-switch :modelValue="text" disabled />
+      </template>
       <template #action="{ record }">
         <a @click="editRecord(record)"><EditOutlined /></a>
       </template>
@@ -187,7 +190,21 @@
   import AppPersist from './components/systemPersist.vue'
   import AppRolePersist from './components/systemRolePersist.vue'
   import AppMenuPersist from './components/systemMenuPersist.vue'
+  import AppSwitch from '@com/switch'
   export default {
+    components: {
+      AppContainer,
+      SearchOutlined,
+      RedoOutlined,
+      AppEditor,
+      AppMenuEditor,
+      EditOutlined,
+      PlusCircleOutlined,
+      AppPersist,
+      AppRolePersist,
+      AppMenuPersist,
+      AppSwitch,
+    },
     computed: {
       ...mapGetters({
         dataList: 'appSystemInfo/system/dataList',
@@ -201,18 +218,6 @@
           return this.columns.filter((item) => item['key'] != 'id')
         }
       },
-    },
-    components: {
-      AppContainer,
-      SearchOutlined,
-      RedoOutlined,
-      AppEditor,
-      AppMenuEditor,
-      EditOutlined,
-      PlusCircleOutlined,
-      AppPersist,
-      AppRolePersist,
-      AppMenuPersist,
     },
     data() {
       return {
@@ -246,7 +251,13 @@
             dataIndex: 'sysName',
             width: 150,
           },
-          { title: '状态', key: 'enable', dataIndex: 'enable', width: 150 },
+          {
+            title: '状态',
+            key: 'deleted',
+            dataIndex: 'deleted',
+            width: 150,
+            slots: { customRender: 'deleted' },
+          },
           {
             title: '备注',
             key: 'remark',
@@ -308,14 +319,12 @@
           })
       },
       editRecord(val) {
-        const deleted = val?.deleted == 1
-        Object.assign(val, { deleted })
         this.setEditData(val)
         this.model.editComponent = 'AppEditor'
         this.model.visible = true
       },
       persistRecord() {
-        this.setEditData({ deleted: false, id: 0 })
+        this.setEditData({ deleted: 0, id: 0 })
         this.setRoleInfo()
         this.persist.visible = true
         this.persist.persistComponent = 'AppPersist'
