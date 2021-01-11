@@ -17,7 +17,7 @@
       </a-button>
       <a-button
         type="primary"
-        :loading="loading.query"
+        :loading="loading.persist"
         @click="persistRecord"
         size="small"
         v-if="perPersist"
@@ -38,7 +38,7 @@
 
     <a-table
       rowKey="id"
-      :columns="tableColomn"
+      :columns="tableColumns"
       :data-source="dataList"
       :loading="loading.query"
       size="small"
@@ -194,7 +194,7 @@
         perPersist: 'appSystemInfo/system/perPersist',
         perMerge: 'appSystemInfo/system/perMerge',
       }),
-      tableColomn() {
+      tableColumns() {
         if (this.perMerge) {
           return this.columns
         } else {

@@ -30,3 +30,15 @@
     margin-bottom: 0px;
   }
 }
+
+.app-table_pagination {
+  .ant-pagination {
+    margin-top: 8px;
+    margin-right: 30px;
+    text-align: right;
+
+    .ant-select-selector {
+      width: 60px;
+    }
+  }
+}
