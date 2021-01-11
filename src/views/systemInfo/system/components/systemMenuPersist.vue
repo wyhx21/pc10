@@ -13,17 +13,8 @@
 
   export default {
     computed: {},
-    watch: {
-      idList: {
-        handler(val) {
-          this.checkedList = val
-        },
-        immediate: true,
-      },
-    },
     data() {
       return {
-        checkedList: [],
         replaceFields: {
           title: 'label',
           value: 'id',

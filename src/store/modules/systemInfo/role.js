@@ -3,18 +3,19 @@ import {
   deleteRecode,
   mergeRecord,
   persistRecord,
+  queryRoleMenu,
 } from '@axios/systemInfo/role.js'
-const defaultPageSize = 10
+import { treeSelectUtil } from '@utils/commonUtil.js'
 
 export default {
   namespaced: true,
   state: {
     pageInfo: {
       page: 1,
-      size: defaultPageSize,
+      size: 10,
     },
     pageResult: {
-      total: 2 * defaultPageSize,
+      total: 20,
       toalPage: 2,
     },
     params: {
@@ -23,6 +24,7 @@ export default {
     },
     dataList: [],
     currentData: {},
+    menuIdList: [],
   },
   getters: {
     dataList: (_state) => _state.dataList,
@@ -30,6 +32,7 @@ export default {
     pageInfo: (_state) => _state.pageInfo,
     currentData: (_state) => _state.currentData,
     totalPageSize: (_state) => _state.pageResult.total,
+    menuIdList: (_state) => _state.menuIdList,
     perPersist: (_state, _getters, _rootState, _rootGetters) => {
       const arr = _rootGetters['appSystem/userRoleAuth/pageRoleAuth'](
         'role_setting'
@@ -50,7 +53,7 @@ export default {
     },
   },
   mutations: {
-    pageInfo: (_state, { page = 1, size = defaultPageSize } = {}) => {
+    pageInfo: (_state, { page = 1, size = 10 } = {}) => {
       page = page < 1 ? 1 : page
       _state.pageInfo = { page, size }
     },
@@ -60,6 +63,8 @@ export default {
     queryParam: (_state, params = {}) => (_state.params = params),
     dataList: (_state, list = []) => (_state.dataList = list),
     currentData: (_state, data = {}) => (_state.currentData = data),
+    menuIdList: (_state, idList = []) =>
+      (_state.menuIdList = idList.filter((item) => item != 1)),
   },
   actions: {
     queryPage: async ({ commit, getters }) => {
@@ -74,6 +79,19 @@ export default {
           .catch((err) => {
             reject(err)
           })
+      })
+    },
+    roleMenu: async ({ getters, commit }) => {
+      const roleId = getters.currentData['id']
+      return new Promise((resolve, reject) => {
+        queryRoleMenu(roleId)
+          .then((res) => {
+            const { menuIds, trees } = res
+            commit('menuIdList', menuIds)
+            const idList = treeSelectUtil(trees, menuIds)
+            resolve({ trees, idList })
+          })
+          .catch(() => reject())
       })
     },
     dataMerge: async (args0, val = {}) => {

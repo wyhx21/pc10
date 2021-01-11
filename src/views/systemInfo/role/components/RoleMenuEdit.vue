@@ -1,6 +1,6 @@
 <template>
   <a-tree
-    checkable
+    :checkable="currentData.roleType == 2"
     :tree-data="treeList"
     :replace-fields="replaceFields"
     :checked-keys="selectIdList"
@@ -9,10 +9,14 @@
 </template>
 
 <script>
-  import { mapActions, mapMutations } from 'vuex'
+  import { mapActions, mapMutations, mapGetters } from 'vuex'
 
   export default {
-    computed: {},
+    computed: {
+      ...mapGetters({
+        currentData: 'appSystemInfo/role/currentData',
+      }),
+    },
     data() {
       return {
         replaceFields: {
@@ -36,10 +40,10 @@
     },
     methods: {
       ...mapMutations({
-        menuIdList: 'appSystemInfo/system/menuIdList',
+        menuIdList: 'appSystemInfo/role/menuIdList',
       }),
       ...mapActions({
-        getMenuTree: 'appSystemInfo/system/sysMenu',
+        getMenuTree: 'appSystemInfo/role/roleMenu',
       }),
       checkedTree(checkedKeys, { halfCheckedKeys }) {
         this.menuIdList([...checkedKeys, ...halfCheckedKeys])

@@ -68,10 +68,37 @@
       :maskClosable="false"
     >
       <div style="height: 420px; overflow: auto">
-        <component :ref="`refSystem${merge.component}`" :is="merge.component" />
+        <component :ref="`refRole${merge.component}`" :is="merge.component" />
       </div>
 
       <template #footer>
+        <a-button
+          size="small"
+          type="primary"
+          @click="confirmRowData"
+          v-if="merge.component == 'AppEdit'"
+        >
+          菜单信息
+        </a-button>
+        <a-button
+          size="small"
+          type="primary"
+          @click="merge.component = 'AppEdit'"
+          v-if="merge.component == 'AppMenuEdit'"
+        >
+          角色信息
+        </a-button>
+        <a-popconfirm
+          title="确认保存该记录？"
+          ok-text="确认"
+          cancel-text="取消"
+          v-if="merge.component == 'AppMenuEdit'"
+          @confirm="confirmMergeData"
+        >
+          <a-button type="primary" size="small" :loading="loading.merge">
+            确认修改
+          </a-button>
+        </a-popconfirm>
         <a-popconfirm
           title="确认取消该记录修改？"
           ok-text="确认"
@@ -91,6 +118,7 @@
   import AppPagination from '@com/pagination'
   import AppEdit from './components/RoleEdit'
   import AppSwitch from '@com/switch'
+  import AppMenuEdit from './components/RoleMenuEdit'
   import {
     RedoOutlined,
     SearchOutlined,
@@ -107,6 +135,7 @@
       DeleteOutlined,
       AppEdit,
       AppSwitch,
+      AppMenuEdit,
     },
     computed: {
       ...mapGetters({
@@ -135,6 +164,7 @@
         },
         loading: {
           query: false,
+          merge: false,
         },
         merge: {
           visible: false,
@@ -208,6 +238,11 @@
         this.pageInfo({ page, size })
         this.queryData()
       },
+      confirmRowData() {
+        this.$refs.refRoleAppEdit.submit()
+        this.merge.component = 'AppMenuEdit'
+      },
     },
+    confirmMergeData() {},
   }
 </script>

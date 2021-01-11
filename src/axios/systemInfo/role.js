@@ -9,4 +9,6 @@ const mergeRecord = (data) => axios.doPost(`/system/role/merge`, data)
 
 const persistRecord = (data) => axios.doPost(`/system/role/persist`, data)
 
-export { queryPage, deleteRecode, mergeRecord, persistRecord }
+const queryRoleMenu = (roleId) => axios.doGet(`/system/role/roleMenu/${roleId}`)
+
+export { queryPage, deleteRecode, mergeRecord, persistRecord, queryRoleMenu }
