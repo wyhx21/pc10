@@ -55,6 +55,46 @@
     <template #footer>
       <app-pagination :total="totalPageSize" @change="onPageChange" />
     </template>
+
+    <!-- 核销类型修改 begin -->
+    <a-modal
+      v-model:visible="visible.merge"
+      title="核销类型编辑"
+      width="400px"
+      :maskClosable="false"
+    >
+      <div style="height: 420px; overflow: auto">
+        <app-edit ref="refVerifyTypeEdit" />
+      </div>
+
+      <template #footer>
+        <app-model-footer
+          @confirm="confirmMerge"
+          @cancel="visible.merge = false"
+        />
+      </template>
+    </a-modal>
+    <!-- 核销类型修改 end -->
+
+    <!-- 核销类型新增 begin -->
+    <a-modal
+      v-model:visible="visible.persist"
+      title="核销类型新增"
+      width="400px"
+      :maskClosable="false"
+    >
+      <div style="height: 420px; overflow: auto">
+        <app-persist ref="refVerifyTypePersist" />
+      </div>
+
+      <template #footer>
+        <app-model-footer
+          @confirm="confirmPersist"
+          @cancel="visible.persist = false"
+        />
+      </template>
+    </a-modal>
+    <!-- 核销类型新增 end -->
   </app-container>
 </template>
 <script>
@@ -62,6 +102,9 @@
   import AppContainer from '@com/container'
   import AppPagination from '@com/pagination'
   import AppSwitch from '@com/switch'
+  import AppModelFooter from '@com/modelFooter'
+  import AppEdit from './components/verifyTypeEdit'
+  import AppPersist from './components/verifyTypePersist'
   import {
     RedoOutlined,
     SearchOutlined,
@@ -77,6 +120,9 @@
       AppContainer,
       AppPagination,
       AppSwitch,
+      AppModelFooter,
+      AppEdit,
+      AppPersist,
     },
     computed: {
       ...mapGetters({
@@ -169,8 +215,40 @@
             this.loading.query = false
           })
       },
-      persistRecord() {},
-      editRecord() {},
+      persistRecord() {
+        this.currentData({ id: 0, deleted: 0, dicSort: 0 })
+        this.visible.persist = true
+      },
+      editRecord(record) {
+        this.currentData(record)
+        this.visible.merge = true
+      },
+      confirmMerge() {
+        this.$refs.refVerifyTypeEdit.submit()
+        this.loading.merge = true
+        this.dataMerge()
+          .then(() => {
+            this.loading.merge = false
+            this.visible.merge = false
+            this.queryPage()
+          })
+          .catch(() => {
+            this.loading.merge = false
+          })
+      },
+      confirmPersist() {
+        this.$refs.refVerifyTypePersist.submit()
+        this.loading.persist = true
+        this.dataPersist()
+          .then(() => {
+            this.loading.persist = false
+            this.visible.persist = false
+            this.queryPage()
+          })
+          .catch(() => {
+            this.loading.persist = false
+          })
+      },
     },
   }
 </script>
