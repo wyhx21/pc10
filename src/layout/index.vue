@@ -43,8 +43,8 @@
             />
           </a-col>
           <a-col :xs="20" :sm="20" :md="20" :lg="20" :xl="20">
-            <vab-avatar />
             <vab-role />
+            <vab-avatar />
           </a-col>
         </a-row>
       </a-layout-header>

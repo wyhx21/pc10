@@ -29,16 +29,32 @@
 
     <a-table
       rowKey="id"
-      :columns="columns"
+      :columns="tableColumns"
       :data-source="dataList"
       :loading="loading.query"
       size="small"
       :pagination="false"
     >
       <template #action="{ record }">
-        <a @click="editRecord(record)"><EditOutlined /></a>
-        <a-divider type="vertical" />
-        <a @click="deleteRecord(record)"><DeleteOutlined /></a>
+        <a @click="editRecord(record)" v-if="perMerge"><EditOutlined /></a>
+        <a-divider
+          type="vertical"
+          v-if="
+            perMerge &&
+            perDelete &&
+            record.roleType != 0 &&
+            record.roleType != 1
+          "
+        />
+        <a-popconfirm
+          title="确认删除该记录新增？"
+          ok-text="确认"
+          cancel-text="取消"
+          v-if="perDelete && record.roleType != 0 && record.roleType != 1"
+          @confirm="deleteRecord(record)"
+        >
+          <a><DeleteOutlined /></a>
+        </a-popconfirm>
       </template>
     </a-table>
 
@@ -70,7 +86,16 @@
       ...mapGetters({
         dataList: 'appSystemInfo/role/dataList',
         totalPageSize: 'appSystemInfo/role/totalPageSize',
+        perMerge: 'appSystemInfo/role/perMerge',
+        perDelete: 'appSystemInfo/role/perDelete',
       }),
+      tableColumns() {
+        if (this.perMerge || this.perDelete) {
+          return this.columns
+        } else {
+          return this.columns.filter((item) => item['dataIndex'] != 'id')
+        }
+      },
     },
     data() {
       return {
@@ -88,7 +113,7 @@
         columns: [
           { title: '角色编码', dataIndex: 'roleCode', width: 150 },
           { title: '角色名称', dataIndex: 'roleName', width: 150 },
-          { title: '角色类型', dataIndex: 'roleType', width: 150 },
+          { title: '角色类型', dataIndex: 'roleTypeValue', width: 150 },
           { title: '状态', dataIndex: 'enable', width: 150 },
           { title: '备注信息', dataIndex: 'remark', ellipsis: true },
           { title: '更新人', dataIndex: 'lastModifiedBy', width: 150 },
@@ -112,6 +137,7 @@
       }),
       ...mapActions({
         queryPage: 'appSystemInfo/role/queryPage',
+        dataDelete: 'appSystemInfo/role/dataDelete',
       }),
       initQueryData() {
         this.pageInfo()
@@ -135,7 +161,9 @@
         }
       },
       editRecord() {},
-      deleteRecord() {},
+      deleteRecord({ id }) {
+        this.dataDelete(id)
+      },
       onPageChange(page, size) {
         this.pageInfo({ page, size })
         this.queryData()

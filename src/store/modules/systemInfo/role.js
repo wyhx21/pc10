@@ -31,15 +31,21 @@ export default {
     currentData: (_state) => _state.currentData,
     totalPageSize: (_state) => _state.pageResult.total,
     perPersist: (_state, _getters, _rootState, _rootGetters) => {
-      const arr = _rootGetters['userRoleAuth/pageRoleAuth']('role_setting')
+      const arr = _rootGetters['appSystem/userRoleAuth/pageRoleAuth'](
+        'role_setting'
+      )
       return arr.includes('role_setting_persist')
     },
     perMerge: (_state, _getters, _rootState, _rootGetters) => {
-      const arr = _rootGetters['userRoleAuth/pageRoleAuth']('role_setting')
+      const arr = _rootGetters['appSystem/userRoleAuth/pageRoleAuth'](
+        'role_setting'
+      )
       return arr.includes('role_setting_merge')
     },
     perDelete: (_state, _getters, _rootState, _rootGetters) => {
-      const arr = _rootGetters['userRoleAuth/pageRoleAuth']('role_setting')
+      const arr = _rootGetters['appSystem/userRoleAuth/pageRoleAuth'](
+        'role_setting'
+      )
       return arr.includes('role_setting_delete')
     },
   },

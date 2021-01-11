@@ -42,5 +42,6 @@
 <style lang="less">
   .vab-role-wrap {
     margin-left: 20px;
+    margin-right: 20px;
   }
 </style>
