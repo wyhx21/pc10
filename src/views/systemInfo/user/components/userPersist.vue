@@ -1,26 +1,16 @@
 <template>
   <a-form layout="vertical" :model="currentData" class="app-edit-form_1">
     <a-form-item label="用户编码">
-      <a-input
-        v-model:value="currentData.userCode"
-        placeholder="用户编码"
-        disabled
-      />
+      <a-input v-model:value="currentData.userCode" placeholder="用户编码" />
     </a-form-item>
     <a-form-item label="用户名称">
       <a-input v-model:value="currentData.userName" placeholder="用户名称" />
     </a-form-item>
-    <a-form-item>
-      <template #label>
-        <a-checkbox @change="onChange" v-model:checked="currentData.passChange">
-          修改密码
-        </a-checkbox>
-      </template>
+    <a-form-item label="设置密码">
       <a-input
         v-model:value="currentData.userPwd"
+        placeholder="设置密码"
         type="password"
-        placeholder="修改密码"
-        :disabled="!currentData.passChange"
       />
     </a-form-item>
     <a-form-item label="性别">
@@ -65,11 +55,6 @@
       }),
       submit() {
         this.setEditData(this.currentData)
-      },
-      onChange({ target }) {
-        if (!target.checked) {
-          this.currentData.userPwd = ''
-        }
       },
     },
   }

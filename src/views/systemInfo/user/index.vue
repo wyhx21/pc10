@@ -106,6 +106,60 @@
       </template>
     </a-modal>
     <!-- 用户编辑 end -->
+
+    <!-- 用户新增 begin -->
+    <a-modal
+      v-model:visible="persist.visible"
+      title="用户新增"
+      width="400px"
+      :maskClosable="false"
+    >
+      <div style="height: 350px; overflow: auto">
+        <component
+          :ref="`refUser${persist.component}`"
+          :is="persist.component"
+        />
+      </div>
+
+      <template #footer>
+        <a-button
+          size="small"
+          type="primary"
+          @click="persistRowData"
+          v-if="persist.component == 'AppUserPersist'"
+        >
+          角色信息
+        </a-button>
+        <a-button
+          size="small"
+          type="primary"
+          @click="persist.component = 'AppUserPersist'"
+          v-if="persist.component == 'AppUserRolePersist'"
+        >
+          用户信息
+        </a-button>
+        <a-popconfirm
+          title="确认添加该记录？"
+          ok-text="确认"
+          cancel-text="取消"
+          v-if="persist.component == 'AppUserRolePersist'"
+          @confirm="persistMergeData"
+        >
+          <a-button type="primary" size="small" :loading="loading.persist">
+            确认修改
+          </a-button>
+        </a-popconfirm>
+        <a-popconfirm
+          title="确认取消添加该记录？"
+          ok-text="确认"
+          cancel-text="取消"
+          @confirm="persist.visible = false"
+        >
+          <a-button size="small">取消</a-button>
+        </a-popconfirm>
+      </template>
+    </a-modal>
+    <!-- 用户新增 end -->
   </app-container>
 </template>
 <script>
@@ -115,6 +169,8 @@
   import AppSwitch from '@com/switch'
   import AppUserEdit from './components/userEdit'
   import AppUserRoleEdit from './components/userRoleEdit'
+  import AppUserPersist from './components/userPersist'
+  import AppUserRolePersist from './components/userRolePersist'
   import {
     RedoOutlined,
     SearchOutlined,
@@ -132,6 +188,8 @@
       EditOutlined,
       AppUserEdit,
       AppUserRoleEdit,
+      AppUserPersist,
+      AppUserRolePersist,
     },
     computed: {
       ...mapGetters({
@@ -157,8 +215,13 @@
         loading: {
           query: false,
           merge: false,
+          persist: false,
         },
         merge: {
+          visible: false,
+          component: '',
+        },
+        persist: {
           visible: false,
           component: '',
         },
@@ -194,6 +257,7 @@
       ...mapActions({
         queryPage: 'appSystemInfo/user/queryPage',
         dataMerge: 'appSystemInfo/user/dataMerge',
+        dataPersist: 'appSystemInfo/user/dataPersist',
       }),
       resetParam() {
         this.params = {
@@ -243,6 +307,24 @@
       },
       persistRecord() {
         this.currentData({ deleted: 0, id: 0, sex: 0 })
+        this.persist.visible = true
+        this.persist.component = 'AppUserPersist'
+      },
+      persistRowData() {
+        this.$refs.refUserAppUserPersist.submit()
+        this.persist.component = 'AppUserRolePersist'
+      },
+      persistMergeData() {
+        this.loading.persist = true
+        this.dataPersist()
+          .then(() => {
+            this.queryData()
+            this.loading.persist = false
+            this.persist.visible = false
+          })
+          .catch(() => {
+            this.loading.persist = false
+          })
       },
     },
   }
