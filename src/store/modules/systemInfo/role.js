@@ -94,11 +94,34 @@ export default {
           .catch(() => reject())
       })
     },
-    dataMerge: async (args0, val = {}) => {
-      return mergeRecord(val)
+    dataMerge: async ({ getters }) => {
+      const { id, roleName, remark, deleted, roleCode } = getters.currentData
+      const menuId = getters.menuIdList
+      const param = {
+        data: {
+          id,
+          roleName,
+          remark,
+          deleted,
+          roleCode,
+        },
+        menuId,
+      }
+      return mergeRecord(param)
     },
-    dataPersist: async (args0, val = {}) => {
-      return persistRecord(val)
+    dataPersist: async ({ getters }) => {
+      const { roleCode, roleName, remark, deleted } = getters.currentData
+      const menuId = getters.menuIdList
+      const param = {
+        data: {
+          roleCode,
+          roleName,
+          remark,
+          deleted,
+        },
+        menuId,
+      }
+      return persistRecord(param)
     },
     dataDelete: async (args0, id) => {
       return deleteRecode(id)
