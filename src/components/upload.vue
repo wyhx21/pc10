@@ -3,6 +3,7 @@
     name="file"
     :action="url"
     :headers="headers"
+    :showUploadList="false"
     @change="handleChange"
   >
     <p class="ant-upload-drag-icon">
@@ -28,9 +29,6 @@
       url: {
         default: '',
       },
-      dataText: {
-        defalt: '请上传Excel文件',
-      },
     },
     computed: {
       ...mapGetters({
@@ -51,19 +49,17 @@
           switch (respCode) {
             case '000000':
               infoLog({ respCode, respMsg: '文件上传成功!' })
-              info.fileList = []
+              break
             case '200001': {
               store.commit('appSystem/account/loginInfo')
               store.commit('appSystem/account/token')
               store.commit('appSystem/userRoleAuth/clearCache')
               router.push('/login')
-              info.fileList = []
-              return
+              break
             }
             default: {
               infoLog({ respCode, respMsg })
-              info.fileList = []
-              return
+              break
             }
           }
         } else if (status === 'error') {
