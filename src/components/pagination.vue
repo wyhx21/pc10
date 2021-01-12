@@ -3,6 +3,8 @@
     <a-pagination
       show-size-changer
       :size="size"
+      v-model:current="currentPage"
+      v-model:pageSize="pageSize"
       :page-size-options="pageSizeOptions"
       :total="total"
       :show-total="(total) => `共 ${total} 条`"
@@ -27,8 +29,24 @@
       size: {
         default: 'small',
       },
+      current: {
+        default: 1,
+      },
     },
-    data() {},
+    watch: {
+      current: {
+        handler(val) {
+          this.currentPage = val
+        },
+        immediate: true,
+      },
+    },
+    data() {
+      return {
+        currentPage: 1,
+        pageSize: 10,
+      }
+    },
     methods: {
       onPageChange(page, size) {
         this.$emit('change', page, size)

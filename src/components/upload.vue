@@ -68,6 +68,10 @@
       onfinish() {
         this.$emit('update:visible', false)
       },
+      onSuccess() {
+        this.onfinish()
+        this.$emit('success', false)
+      },
       donwLoadTemp() {
         downloadFile(this.tempUrl)
       },
@@ -79,7 +83,7 @@
           switch (respCode) {
             case '000000':
               infoLog({ respCode, respMsg: '文件上传成功!' })
-              this.onfinish()
+              this.onSuccess()
               break
             case '200001': {
               store.commit('appSystem/account/loginInfo')

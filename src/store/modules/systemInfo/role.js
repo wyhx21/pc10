@@ -32,6 +32,7 @@ export default {
     pageInfo: (_state) => _state.pageInfo,
     currentData: (_state) => _state.currentData,
     totalPageSize: (_state) => _state.pageResult.total,
+    currentPage: (_state) => _state.pageInfo.page,
     menuIdList: (_state) => _state.menuIdList,
     perPersist: (_state, _getters, _rootState, _rootGetters) => {
       const arr = _rootGetters['appSystem/userRoleAuth/pageRoleAuth'](

@@ -68,7 +68,11 @@
     </a-table>
 
     <template #footer>
-      <app-pagination :total="totalPageSize" @change="onPageChange" />
+      <app-pagination
+        :total="totalPageSize"
+        :current="currentPage"
+        @change="onPageChange"
+      />
     </template>
 
     <!-- 商品编辑 begin -->
@@ -99,8 +103,8 @@
     <app-upload
       url="/basic/product/upload"
       tempUrl="/common/download/productExcel"
-      :visible="visible.upload"
-      @update:visible="uploadSuccess"
+      v-model:visible="visible.upload"
+      @success="uploadSuccess"
     />
     <!-- 商品导入 end -->
   </app-container>
@@ -150,6 +154,7 @@
         perExport: 'appBasic/product/perExport',
         perUpload: 'appBasic/product/perUpload',
         totalPageSize: 'appBasic/product/totalPageSize',
+        currentPage: 'appBasic/product/currentPage',
       }),
       tableColumns() {
         if (this.perMerge) {

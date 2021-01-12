@@ -53,7 +53,11 @@
     </a-table>
 
     <template #footer>
-      <app-pagination :total="totalPageSize" @change="onPageChange" />
+      <app-pagination
+        :current="currentPage"
+        :total="totalPageSize"
+        @change="onPageChange"
+      />
     </template>
 
     <!-- 商品类型修改 begin -->
@@ -114,6 +118,7 @@
         perPersist: 'appDict/prodType/perPersist',
         perMerge: 'appDict/prodType/perMerge',
         totalPageSize: 'appDict/prodType/totalPageSize',
+        currentPage: 'appDict/prodType/currentPage',
       }),
       tableColumns() {
         if (this.perMerge) {

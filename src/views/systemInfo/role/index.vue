@@ -66,7 +66,11 @@
     </a-table>
 
     <template #footer>
-      <app-pagination :total="totalPageSize" @change="onPageChange" />
+      <app-pagination
+        :current="currentPage"
+        :total="totalPageSize"
+        @change="onPageChange"
+      />
     </template>
 
     <!-- 系统编辑 begin -->
@@ -213,6 +217,7 @@
         perMerge: 'appSystemInfo/role/perMerge',
         perDelete: 'appSystemInfo/role/perDelete',
         perPersist: 'appSystemInfo/role/perPersist',
+        currentPage: 'appSystemInfo/role/currentPage',
       }),
       tableColumns() {
         if (this.perMerge || this.perDelete) {
