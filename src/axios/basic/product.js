@@ -7,4 +7,6 @@ const mergeRecord = (data) => axios.doPost(`/basic/product/merge`, data)
 
 const persistRecord = (data) => axios.doPost(`/basic/product/persist`, data)
 
-export { queryPage, mergeRecord, persistRecord }
+const exportData = (data) => axios.doPost(`/basic/product/export`, data)
+
+export { queryPage, mergeRecord, persistRecord, exportData }

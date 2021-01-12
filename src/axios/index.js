@@ -30,7 +30,7 @@ axios.interceptors.response.use(
     const dataAxios = response.data
     const { respCode } = dataAxios
     if (respCode === undefined) {
-      return dataAxios
+      return response
     } else {
       switch (respCode) {
         case '000000':
@@ -104,6 +104,15 @@ const doGet = (url, params = {}) => {
   })
 }
 
+const doGetBlob = (url, params = {}) => {
+  return axios({
+    method: 'get',
+    url,
+    params,
+    responseType: 'blob',
+  })
+}
+
 const doPost = (url, data = {}, params = {}) => {
   return axios({
     method: 'post',
@@ -114,6 +123,7 @@ const doPost = (url, data = {}, params = {}) => {
 }
 
 export default {
+  doGetBlob,
   doGet,
   doPost,
 }

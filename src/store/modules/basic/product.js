@@ -1,5 +1,11 @@
-import { queryPage, mergeRecord, persistRecord } from '@axios/basic/product.js'
+import {
+  queryPage,
+  mergeRecord,
+  persistRecord,
+  exportData,
+} from '@axios/basic/product.js'
 import { prodTypeList } from '@axios/dict/prodType.js'
+import { downloadExcel } from '@axios/common.js'
 
 export default {
   namespaced: true,
@@ -45,6 +51,12 @@ export default {
       )
       return arr.includes('prod_setting_merge')
     },
+    perExport: (_state, _getters, _rootState, _rootGetters) => {
+      const arr = _rootGetters['appSystem/userRoleAuth/pageRoleAuth'](
+        'prod_setting'
+      )
+      return arr.includes('prod_setting_export')
+    },
   },
   mutations: {
     pageInfo: (_state, { page = 1, size = 10 } = {}) => {
@@ -81,6 +93,16 @@ export default {
           .catch((err) => {
             reject(err)
           })
+      })
+    },
+    exportData: async ({ getters }) => {
+      return new Promise((resolve, reject) => {
+        exportData(getters.params)
+          .then(async (res) => {
+            await downloadExcel(res)
+            resolve(res)
+          })
+          .catch(() => reject())
       })
     },
     dataMerge: async ({ getters }) => {

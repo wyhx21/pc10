@@ -11,6 +11,16 @@
       </a-button>
       <a-button
         type="primary"
+        @click="exportRecord"
+        size="small"
+        v-if="perExport"
+        :loading="loading.export"
+      >
+        <template #icon><FileExcelOutlined /></template>
+        导出
+      </a-button>
+      <a-button
+        type="primary"
         @click="persistRecord"
         size="small"
         v-if="perPersist"
@@ -92,6 +102,7 @@
     SearchOutlined,
     EditOutlined,
     PlusCircleOutlined,
+    FileExcelOutlined,
   } from '@ant-design/icons-vue'
   export default {
     components: {
@@ -99,6 +110,7 @@
       SearchOutlined,
       EditOutlined,
       PlusCircleOutlined,
+      FileExcelOutlined,
       RedoOutlined,
       AppContainer,
       AppPagination,
@@ -113,6 +125,7 @@
         dataList: 'appBasic/product/dataList',
         perPersist: 'appBasic/product/perPersist',
         perMerge: 'appBasic/product/perMerge',
+        perExport: 'appBasic/product/perExport',
         totalPageSize: 'appBasic/product/totalPageSize',
       }),
       tableColumns() {
@@ -127,6 +140,7 @@
       return {
         loading: {
           query: false,
+          export: false,
         },
         visible: {
           merge: false,
@@ -181,6 +195,7 @@
         queryPage: 'appBasic/product/queryPage',
         dataMerge: 'appBasic/product/dataMerge',
         dataPersist: 'appBasic/product/dataPersist',
+        exportData: 'appBasic/product/exportData',
       }),
       initQueryData() {
         this.pageInfo()
@@ -226,6 +241,16 @@
             this.queryData()
           })
           .catch(() => {})
+      },
+      exportRecord() {
+        this.loading.export = true
+        this.exportData()
+          .then(() => {
+            this.loading.export = false
+          })
+          .catch(() => {
+            this.loading.export = false
+          })
       },
     },
   }
