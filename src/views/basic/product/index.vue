@@ -96,14 +96,12 @@
     <!-- 商品新增 end -->
 
     <!-- 商品导入 begin -->
-    <app-modal
-      title="导入"
-      width="400px"
-      height="200px"
-      v-model:visible="visible.upload"
-    >
-      <app-upload url="/api/basic/product/upload" />
-    </app-modal>
+    <app-upload
+      url="/basic/product/upload"
+      tempUrl="/common/download/productExcel"
+      :visible="visible.upload"
+      @update:visible="uploadSuccess"
+    />
     <!-- 商品导入 end -->
   </app-container>
 </template>
@@ -280,6 +278,10 @@
       },
       showUpload() {
         this.visible.upload = true
+      },
+      uploadSuccess() {
+        this.visible.upload = false
+        this.initQueryData()
       },
     },
   }

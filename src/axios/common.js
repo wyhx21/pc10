@@ -1,8 +1,8 @@
 import axios from '@axios/index.js'
 
-const downloadExcel = (taskId) =>
+const downloadFile = (url) =>
   axios
-    .doGetBlob(`/common/download/file/${taskId}`)
+    .doGetBlob(url)
     .then((res) => {
       if (!res.data) {
         return
@@ -43,4 +43,7 @@ const downloadExcel = (taskId) =>
       Promise.reject(err)
     })
 
-export { downloadExcel }
+const downloadExcel = (taskId) =>
+  downloadFile(`/common/download/file/${taskId}`)
+
+export { downloadExcel, downloadFile }
