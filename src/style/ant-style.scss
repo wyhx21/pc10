@@ -35,14 +35,49 @@
   }
 }
 
+.app-edit-form_2 {
+  .ant-form-item {
+    margin-bottom: 0px;
+  }
+  .ant-form-item-label {
+    width: 100px;
+    text-align: center;
+  }
+  .ant-form-item-control-wrapper {
+    width: calc(100% - 100px);
+  }
+
+  .ant-form-item-control {
+    width: 100%;
+  }
+
+  .ant-input-number {
+    width: 100%;
+  }
+}
+
 .app-table_pagination {
   .ant-pagination {
     margin-top: 8px;
     margin-right: 30px;
-    text-align: right;
+    text-align: left;
 
     .ant-select-selector {
       width: 60px;
     }
   }
+}
+
+.ant-form-inline {
+  .ant-form-item {
+    .ant-form-item-control {
+      width: 180px;
+    }
+  }
+}
+
+.app-data-placeholder {
+  color: $app-main-font-placeholder;
+  font-size: .9em;
+  line-height: 1.5em;
 }

@@ -1,0 +1,19 @@
+@import '@style/variable.scss';
+
+.app-fiance-num {
+  margin-right: $app-color-fiance-margine;
+  margin-left: $app-color-fiance-margine;
+  height: 1.5em;
+
+  .app-fiance_currency {
+    font-size: $app-font-fiance-currency;
+  }
+
+  .app_fiance_integer {
+    font-size: $app-font-fiance-integer;
+  }
+
+  .app_fiance_decimal {
+    font-size: $app-font-fiance-currency;
+  }
+}

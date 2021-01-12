@@ -4,6 +4,7 @@
     :title="title"
     :width="width"
     :maskClosable="false"
+    @update:visible="onCancel"
   >
     <div :style="containStyle">
       <slot></slot>

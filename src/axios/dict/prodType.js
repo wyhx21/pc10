@@ -8,4 +8,6 @@ const mergeRecord = (data) => axios.doPost(`/system/dic/prodType/merge`, data)
 const persistRecord = (data) =>
   axios.doPost(`/system/dic/prodType/persist`, data)
 
-export { queryPage, mergeRecord, persistRecord }
+const prodTypeList = () => axios.doGet(`/system/dic/sysDic/prodType`)
+
+export { queryPage, mergeRecord, persistRecord, prodTypeList }
