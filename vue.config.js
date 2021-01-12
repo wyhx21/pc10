@@ -72,7 +72,7 @@ module.exports = {
           '@store': resolve('src/store'),
           '@utils': resolve('src/utils'),
           '@router': resolve('src/router'),
-          '@com': resolve('src/views/components'),
+          '@com': resolve('src/components'),
           '@style': resolve('src/style'),
         },
       },
