@@ -57,6 +57,12 @@ export default {
       )
       return arr.includes('prod_setting_export')
     },
+    perUpload: (_state, _getters, _rootState, _rootGetters) => {
+      const arr = _rootGetters['appSystem/userRoleAuth/pageRoleAuth'](
+        'prod_setting'
+      )
+      return arr.includes('prod_setting_upload')
+    },
   },
   mutations: {
     pageInfo: (_state, { page = 1, size = 10 } = {}) => {

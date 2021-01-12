@@ -11,6 +11,15 @@
       </a-button>
       <a-button
         type="primary"
+        @click="showUpload"
+        size="small"
+        v-if="perUpload"
+      >
+        <template #icon><CloudUploadOutlined /></template>
+        导入
+      </a-button>
+      <a-button
+        type="primary"
         @click="exportRecord"
         size="small"
         v-if="perExport"
@@ -85,6 +94,17 @@
       <app-persist ref="refProductPersist" />
     </app-modal>
     <!-- 商品新增 end -->
+
+    <!-- 商品导入 begin -->
+    <app-modal
+      title="导入"
+      width="400px"
+      height="200px"
+      v-model:visible="visible.upload"
+    >
+      <app-upload url="/api/basic/product/upload" />
+    </app-modal>
+    <!-- 商品导入 end -->
   </app-container>
 </template>
 <script>
@@ -97,12 +117,14 @@
   import AppPrice from '@com/fianceNum'
   import AppEdit from './components/productEdit'
   import AppPersist from './components/productPersist'
+  import AppUpload from '@com/upload'
   import {
     RedoOutlined,
     SearchOutlined,
     EditOutlined,
     PlusCircleOutlined,
     FileExcelOutlined,
+    CloudUploadOutlined,
   } from '@ant-design/icons-vue'
   export default {
     components: {
@@ -111,6 +133,7 @@
       EditOutlined,
       PlusCircleOutlined,
       FileExcelOutlined,
+      CloudUploadOutlined,
       RedoOutlined,
       AppContainer,
       AppPagination,
@@ -119,6 +142,7 @@
       AppPrice,
       AppEdit,
       AppPersist,
+      AppUpload,
     },
     computed: {
       ...mapGetters({
@@ -126,6 +150,7 @@
         perPersist: 'appBasic/product/perPersist',
         perMerge: 'appBasic/product/perMerge',
         perExport: 'appBasic/product/perExport',
+        perUpload: 'appBasic/product/perUpload',
         totalPageSize: 'appBasic/product/totalPageSize',
       }),
       tableColumns() {
@@ -145,6 +170,7 @@
         visible: {
           merge: false,
           persist: false,
+          upload: false,
         },
         columns: [
           { title: '商品编码', dataIndex: 'prodCode', width: 120 },
@@ -251,6 +277,9 @@
           .catch(() => {
             this.loading.export = false
           })
+      },
+      showUpload() {
+        this.visible.upload = true
       },
     },
   }

@@ -68,6 +68,7 @@
         return {
           height: this.height,
           overflow: 'auto',
+          position: 'relative',
         }
       },
     },
