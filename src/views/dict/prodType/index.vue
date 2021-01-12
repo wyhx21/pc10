@@ -57,43 +57,27 @@
     </template>
 
     <!-- 商品类型修改 begin -->
-    <a-modal
+    <app-modal
       v-model:visible="visible.merge"
       title="商品类型编辑"
       width="400px"
-      :maskClosable="false"
+      height="420px"
+      @confirm="confirmMerge"
     >
-      <div style="height: 420px; overflow: auto">
-        <app-edit ref="refProdTypeEdit" />
-      </div>
-
-      <template #footer>
-        <app-model-footer
-          @confirm="confirmMerge"
-          @cancel="visible.merge = false"
-        />
-      </template>
-    </a-modal>
+      <app-edit ref="refProdTypeEdit" />
+    </app-modal>
     <!-- 商品类型修改 end -->
 
     <!-- 商品类型新增 begin -->
-    <a-modal
+    <app-modal
       v-model:visible="visible.persist"
       title="商品类型新增"
       width="400px"
-      :maskClosable="false"
+      height="420px"
+      @confirm="confirmPersist"
     >
-      <div style="height: 420px; overflow: auto">
-        <app-persist ref="refProdTypePersist" />
-      </div>
-
-      <template #footer>
-        <app-model-footer
-          @confirm="confirmPersist"
-          @cancel="visible.persist = false"
-        />
-      </template>
-    </a-modal>
+      <app-persist ref="refProdTypePersist" />
+    </app-modal>
     <!-- 商品类型新增 end -->
   </app-container>
 </template>
@@ -102,7 +86,7 @@
   import AppContainer from '@com/container'
   import AppPagination from '@com/pagination'
   import AppSwitch from '@com/switch'
-  import AppModelFooter from '@com/modelFooter'
+  import AppModal from '@com/modal'
   import AppEdit from './omponents/prodTypeEdit'
   import AppPersist from './omponents/prodTypePersist'
   import {
@@ -121,7 +105,7 @@
       AppPagination,
       AppSwitch,
       AppEdit,
-      AppModelFooter,
+      AppModal,
       AppPersist,
     },
     computed: {
