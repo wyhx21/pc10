@@ -1,6 +1,6 @@
 import Layout from '@/layout'
 
-const product = [
+const basic = [
   {
     path: '/basic',
     component: Layout,
@@ -18,8 +18,17 @@ const product = [
           id: 300001001,
         },
       },
+      {
+        path: 'customer',
+        name: '客户管理',
+        component: () => import('@/views/basic/customer'),
+        meta: {
+          title: '客户管理',
+          id: 300001002,
+        },
+      },
     ],
   },
 ]
 
-export default [...product]
+export default [...basic]
