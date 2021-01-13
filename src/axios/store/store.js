@@ -13,6 +13,11 @@ const areaMerge = (data) => axios.doPost(`/store/storeArea/merge`, data)
 
 const areaPersist = (data) => axios.doPost(`/store/storeArea/persist`, data)
 
+const querySysStore = () => axios.doGet(`/store/store/sysStore`)
+
+const queryStoreArea = (storeId) =>
+  axios.doGet(`/store/storeArea/sysArea/${storeId}`)
+
 export {
   queryPage,
   mergeRecord,
@@ -20,4 +25,6 @@ export {
   areaQuery,
   areaMerge,
   areaPersist,
+  querySysStore,
+  queryStoreArea,
 }
