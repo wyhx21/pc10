@@ -27,6 +27,15 @@ const basic = [
           id: 300001002,
         },
       },
+      {
+        path: 'supplier',
+        name: '供应商管理',
+        component: () => import('@/views/basic/supplier'),
+        meta: {
+          title: '供应商管理',
+          id: 300001003,
+        },
+      },
     ],
   },
 ]
