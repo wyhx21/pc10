@@ -53,7 +53,15 @@
       />
     </template>
 
-    <!-- 详情 bgin -->
+    <!-- 详情 begin -->
+    <app-modal
+      width="800px"
+      height="450px"
+      :maskClosable="false"
+      v-model:visible="visible.detail"
+    >
+      <app-detail @cancel="visible.detail = false" />
+    </app-modal>
     <!-- 详情 end -->
   </app-container>
 </template>
@@ -62,6 +70,8 @@
   import AppParam from './components/param'
   import AppContainer from '@com/container'
   import AppPagination from '@com/pagination'
+  import AppModal from '@com/modalBlank'
+  import AppDetail from './components/detail'
   import {
     RedoOutlined,
     SearchOutlined,
@@ -77,6 +87,8 @@
       RedoOutlined,
       AppContainer,
       AppPagination,
+      AppModal,
+      AppDetail,
     },
     computed: {
       ...mapGetters({
@@ -125,10 +137,12 @@
       ...mapMutations({
         pageInfo: 'appStore/storeProd/pageInfo',
         currentData: 'appStore/storeProd/currentData',
+        detailPageInfo: 'appStore/storeProd/detailPageInfo',
       }),
       ...mapActions({
         queryPage: 'appStore/storeProd/queryPage',
         exportData: 'appStore/storeProd/exportData',
+        queryDetailData: 'appStore/storeProd/queryDetailPage',
       }),
       initQueryData() {
         this.pageInfo()
@@ -159,7 +173,10 @@
             this.loading.export = false
           })
       },
-      queryDetail() {
+      queryDetail(record) {
+        this.currentData(record)
+        this.detailPageInfo()
+        this.queryDetailData()
         this.visible.detail = true
       },
     },

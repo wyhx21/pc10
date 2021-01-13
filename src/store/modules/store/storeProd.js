@@ -1,4 +1,8 @@
-import { queryPage, exportData } from '@axios/store/storeProd.js' // queryDetailPage
+import {
+  queryPage,
+  exportData,
+  queryDetailPage,
+} from '@axios/store/storeProd.js'
 import { downloadExcel } from '@axios/common.js'
 
 export default {
@@ -19,8 +23,17 @@ export default {
     },
     dataList: [],
     currentData: {},
+    detailPageInfo: {
+      page: 1,
+      size: 10,
+    },
+    detailTotal: 0,
+    detailDataList: [],
   },
   getters: {
+    detailPageInfo: (_state) => _state.detailPageInfo,
+    detailTotal: (_state) => _state.detailTotal,
+    detailDataList: (_state) => _state.detailDataList,
     dataList: (_state) => _state.dataList,
     params: (_state) => _state.params,
     pageInfo: (_state) => _state.pageInfo,
@@ -51,6 +64,12 @@ export default {
     queryParam: (_state, params = {}) => (_state.params = params),
     dataList: (_state, list = []) => (_state.dataList = list),
     currentData: (_state, data = {}) => (_state.currentData = data),
+    detailPageInfo: (_state, { page = 1, size = 10 } = {}) => {
+      page = page < 1 ? 1 : page
+      _state.detailPageInfo = { page, size }
+    },
+    detailTotal: (_state, total = 0) => (_state.detailTotal = total),
+    detailDataList: (_state, list = []) => (_state.detailDataList = list),
   },
   actions: {
     queryPage: async ({ commit, getters }) => {
@@ -76,6 +95,19 @@ export default {
           })
           .catch(() => reject())
       })
+    },
+    queryDetailPage: async ({ getters, commit }) => {
+      const { areaId, prodId } = getters.currentData
+      queryDetailPage({ areaId, prodId }, getters.detailPageInfo)
+        .then((res) => {
+          const { data, total } = res
+          commit('detailDataList', data)
+          commit('detailTotal', total)
+        })
+        .catch(() => {
+          commit('detailDataList')
+          commit('detailTotal')
+        })
     },
   },
 }
