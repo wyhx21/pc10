@@ -96,7 +96,7 @@
         perDetail: 'appStore/storeProd/perDetail',
         perExport: 'appStore/storeProd/perExport',
         totalPageSize: 'appStore/storeProd/totalPageSize',
-        currentPage: 'appStore/storeProd/currentPage',
+        currentPage: 'appStore/storeProd/pageInfo',
       }),
       tableColumns() {
         if (this.perDetail) {

@@ -148,7 +148,7 @@
         perAreaQuery: 'appStore/store/perAreaQuery',
         perAreaPersist: 'appStore/store/perAreaPersist',
         totalPageSize: 'appStore/store/totalPageSize',
-        currentPage: 'appStore/store/currentPage',
+        currentPage: 'appStore/store/pageInfo',
       }),
       tableColumns() {
         if (this.perMerge || this.perAreaPersist) {

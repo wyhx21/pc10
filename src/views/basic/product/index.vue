@@ -154,7 +154,7 @@
         perExport: 'appBasic/product/perExport',
         perUpload: 'appBasic/product/perUpload',
         totalPageSize: 'appBasic/product/totalPageSize',
-        currentPage: 'appBasic/product/currentPage',
+        currentPage: 'appBasic/product/pageInfo',
       }),
       tableColumns() {
         if (this.perMerge) {

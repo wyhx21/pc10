@@ -201,7 +201,7 @@
         perPersist: 'appSystemInfo/user/perPersist',
         perMerge: 'appSystemInfo/user/perMerge',
         totalPageSize: 'appSystemInfo/user/totalPageSize',
-        currentPage: 'appSystemInfo/user/currentPage',
+        currentPage: 'appSystemInfo/user/pageInfo',
       }),
       tableColumns() {
         if (this.perMerge) {

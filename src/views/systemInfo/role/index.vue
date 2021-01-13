@@ -217,7 +217,7 @@
         perMerge: 'appSystemInfo/role/perMerge',
         perDelete: 'appSystemInfo/role/perDelete',
         perPersist: 'appSystemInfo/role/perPersist',
-        currentPage: 'appSystemInfo/role/currentPage',
+        currentPage: 'appSystemInfo/role/pageInfo',
       }),
       tableColumns() {
         if (this.perMerge || this.perDelete) {

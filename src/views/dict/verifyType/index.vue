@@ -118,7 +118,7 @@
         perPersist: 'appDict/verifyType/perPersist',
         perMerge: 'appDict/verifyType/perMerge',
         totalPageSize: 'appDict/verifyType/totalPageSize',
-        currentPage: 'appDict/verifyType/currentPage',
+        currentPage: 'appDict/verifyType/pageInfo',
       }),
       tableColumns() {
         if (this.perMerge) {

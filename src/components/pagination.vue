@@ -30,13 +30,17 @@
         default: 'small',
       },
       current: {
-        default: 1,
+        default: {
+          page: 1,
+          size: 10,
+        },
       },
     },
     watch: {
       current: {
         handler(val) {
-          this.currentPage = val
+          this.currentPage = val.page
+          this.pageSize = val.size
         },
         immediate: true,
       },

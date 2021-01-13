@@ -41,7 +41,7 @@
       <div class="app-store-prod-detail_footer">
         <app-pagination
           :total="detailTotal"
-          :current="detailPageInfo['page']"
+          :current="detailPageInfo"
           @change="onPageChange"
         />
         <a-button size="small" @click="cancel">退出</a-button>
