@@ -6,6 +6,7 @@ import appSystem from './modules/appSystem.js'
 import appSystemInfo from './modules/appSystemInfo.js'
 import appDict from './modules/appDict.js'
 import appBasic from './modules/appBasic.js'
+import appStore from './modules/appStore.js'
 
 const store = createStore({
   modules: {
@@ -15,6 +16,7 @@ const store = createStore({
     appSystemInfo,
     appDict,
     appBasic,
+    appStore,
   },
   plugins: [
     new VuexPersistence({

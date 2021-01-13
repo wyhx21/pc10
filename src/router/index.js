@@ -4,10 +4,11 @@ import initPage from './package/initPage.js'
 import systemInfo from './package/systemInfo.js'
 import dict from './package/dict.js'
 import basic from './package/basic.js'
+import store from './package/store.js'
 
 const routdefault = createRouter({
   history: createWebHashHistory(),
-  routes: [...common, ...initPage, ...systemInfo, ...dict, ...basic],
+  routes: [...common, ...initPage, ...systemInfo, ...dict, ...basic, ...store],
 })
 
 export default routdefault
