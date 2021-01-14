@@ -1,4 +1,8 @@
-import { queryPage } from '@axios/order/purchaseOrder.js'
+import {
+  queryPage,
+  detailOrder,
+  detailStore,
+} from '@axios/order/purchaseOrder.js'
 
 export default {
   namespaced: true,
@@ -22,12 +26,15 @@ export default {
     },
     dataList: [],
     currentData: {},
+    detailList: [],
   },
   getters: {
     dataList: (_state) => _state.dataList,
     params: (_state) => _state.params,
     pageInfo: (_state) => _state.pageInfo,
+    totalPageSize: (_state) => _state.pageResult.total,
     currentData: (_state) => _state.currentData,
+    detailList: (_state) => _state.detailList,
     perDetailOrder: (_state, _getters, _rootState, _rootGetters) => {
       const arr = _rootGetters['appSystem/userRoleAuth/pageRoleAuth'](
         'order_info_purchase'
@@ -52,6 +59,7 @@ export default {
     queryParam: (_state, params = {}) => (_state.params = params),
     dataList: (_state, list = []) => (_state.dataList = list),
     currentData: (_state, data = {}) => (_state.currentData = data),
+    detailList: (_state, list = []) => (_state.detailList = list),
   },
   actions: {
     queryPage: async ({ commit, getters }) => {
@@ -67,6 +75,26 @@ export default {
             reject(err)
           })
       })
+    },
+    queryOrderDetail: async ({ getters, commit }) => {
+      commit('detailList')
+      detailOrder(getters.currentData['id'])
+        .then((res) => {
+          commit('detailList', res)
+        })
+        .catch(() => {
+          commit('detailList')
+        })
+    },
+    queryDetailStore: async ({ getters, commit }) => {
+      commit('detailList')
+      detailStore(getters.currentData['orderNo'])
+        .then((res) => {
+          commit('detailList', res)
+        })
+        .catch(() => {
+          commit('detailList')
+        })
     },
   },
 }
