@@ -62,6 +62,55 @@
   }
 }
 
+.app-param-form_2 {
+  .app-param-form-item_range {
+    width: 446px;
+
+    .ant-form-item-control-wrapper {
+      width: 360px;
+
+      .ant-calendar-picker {
+        width: 100%;
+      }
+
+      .ant-form-item-control {
+        width: 100%;
+      }
+    }
+  }
+
+  .app-param-form-item_num {
+    width: 446px;
+
+    .ant-form-item-control-wrapper {
+      width: 360px;
+
+      .ant-form-item-control {
+        width: 100%;
+
+        input {
+          width: 170px;
+        }
+
+        .ant-input-number {
+          width: 170px;
+        }
+
+        .app-param-form-item_sep {
+          display: inline-block;
+          width: 18px;
+          text-align: center;
+          color: $app-main-font-placeholder;
+        }
+      }
+    }
+  }
+
+  .ant-form-item-label {
+    width: 85px;
+  }
+}
+
 .app-table_pagination {
   .ant-pagination {
     margin-top: 8px;
