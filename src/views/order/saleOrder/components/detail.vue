@@ -38,11 +38,11 @@
     </template>
     <slot></slot>
     <template #footer>
-      <div class="app-sale-order-detail_footer">
-        <slot name="footer">
-          <a-button size="small" @click="cancel">退出</a-button>
-        </slot>
-      </div>
+      <slot name="footer">
+        <a-button size="small" class="app-modal-footer-button" @click="cancel">
+          退出
+        </a-button>
+      </slot>
     </template>
   </app-container>
 </template>
@@ -84,13 +84,6 @@
       span {
         padding: 0;
       }
-    }
-  }
-  .app-sale-order-detail_footer {
-    button {
-      float: right;
-      margin: 8px 8px 8px 0;
-      border-radius: 15px;
     }
   }
 </style>

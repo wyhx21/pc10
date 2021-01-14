@@ -22,5 +22,13 @@
       overflow: auto;
       position: relative;
     }
+
+    .container-footer {
+      .app-modal-footer-button {
+        float: right;
+        margin: 8px 8px 8px 0;
+        border-radius: 15px;
+      }
+    }
   }
 </style>

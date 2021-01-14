@@ -13,8 +13,11 @@
     </a-table>
 
     <template #footer>
-      <a-button size="small" @click="cancel">退出</a-button>
+      <a-button class="app-modal-footer-button" size="small" @click="cancel">
+        退出
+      </a-button>
       <a-button
+        class="app-modal-footer-button"
         type="primary"
         size="small"
         v-if="perDelete && currentDate['orderStatus'] == 0"
@@ -23,6 +26,7 @@
         删除
       </a-button>
       <a-button
+        class="app-modal-footer-button"
         type="primary"
         size="small"
         v-if="perSubmit && currentDate['orderStatus'] == 0"
@@ -31,6 +35,7 @@
         提交
       </a-button>
       <a-button
+        class="app-modal-footer-button"
         type="primary"
         size="small"
         v-if="perTransfer && currentDate['orderStatus'] == 1"
