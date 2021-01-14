@@ -2,6 +2,9 @@ import {
   queryPage,
   detailOrder,
   detailStore,
+  deleteRecord,
+  submitRecord,
+  transferRecord,
 } from '@axios/order/purchaseOrder.js'
 
 export default {
@@ -46,6 +49,24 @@ export default {
         'order_info_purchase'
       )
       return arr.includes('order_info_purchase_detail_store')
+    },
+    perSubmit: (_state, _getters, _rootState, _rootGetters) => {
+      const arr = _rootGetters['appSystem/userRoleAuth/pageRoleAuth'](
+        'order_info_purchase'
+      )
+      return arr.includes('order_info_purchase_submit')
+    },
+    perTransfer: (_state, _getters, _rootState, _rootGetters) => {
+      const arr = _rootGetters['appSystem/userRoleAuth/pageRoleAuth'](
+        'order_info_purchase'
+      )
+      return arr.includes('order_info_purchase_transfer')
+    },
+    perDelete: (_state, _getters, _rootState, _rootGetters) => {
+      const arr = _rootGetters['appSystem/userRoleAuth/pageRoleAuth'](
+        'order_info_purchase'
+      )
+      return arr.includes('order_info_purchase_delete')
     },
   },
   mutations: {
@@ -95,6 +116,15 @@ export default {
         .catch(() => {
           commit('detailList')
         })
+    },
+    deleteRecord: async ({ getters }) => {
+      return deleteRecord(getters.currentData['id'])
+    },
+    submitRecord: async ({ getters }) => {
+      return submitRecord(getters.currentData['id'])
+    },
+    transferRecord: async ({ getters }) => {
+      return transferRecord(getters.currentData['id'])
     },
   },
 }

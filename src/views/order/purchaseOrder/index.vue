@@ -59,7 +59,11 @@
       :maskClosable="false"
       v-model:visible="detail.visible"
     >
-      <component @cancel="detail.visible = false" :is="detail.conponent" />
+      <component
+        @cancel="detail.visible = false"
+        :is="detail.conponent"
+        @refresh="refreshData"
+      />
     </app-modal>
     <!-- 详情 end -->
   </app-container>
@@ -192,6 +196,10 @@
           .catch(() => {
             this.loading.query = false
           })
+      },
+      refreshData() {
+        this.detail.visible = false
+        this.queryData()
       },
       recordOrderDetail(record) {
         this.setCurrentData(record)
