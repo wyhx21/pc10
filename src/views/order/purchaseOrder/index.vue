@@ -11,6 +11,15 @@
       </a-button>
       <a-button
         type="primary"
+        @click="persistRecord"
+        size="small"
+        v-if="perPersist"
+      >
+        <template #icon><PlusCircleOutlined /></template>
+        新增
+      </a-button>
+      <a-button
+        type="primary"
         :loading="loading.query"
         @click="initQueryData"
         size="small"
@@ -52,6 +61,21 @@
       />
     </template>
 
+    <!-- 新增 begin -->
+    <app-modal
+      width="800px"
+      height="450px"
+      :maskClosable="false"
+      v-model:visible="persist.visible"
+    >
+      <app-persist
+        @cancel="persist.visible = false"
+        :is="detail.conponent"
+        @refresh="refreshData"
+      />
+    </app-modal>
+    <!-- 新增 end -->
+
     <!-- 详情 begin -->
     <app-modal
       width="800px"
@@ -72,15 +96,17 @@
   import { mapGetters, mapMutations, mapActions } from 'vuex'
   import AppContainer from '@com/container'
   import AppPrice from '@com/fianceNum'
+  import AppPagination from '@com/pagination'
+  import AppModal from '@com/modalBlank'
   import AppParam from './components/param'
   import AppOrderDetail from './components/orderDetail'
   import AppOrderStoreDetail from './components/orderStoreDetail'
-  import AppPagination from '@com/pagination'
-  import AppModal from '@com/modalBlank'
+  import AppPersist from './components/persist'
   import {
     RedoOutlined,
     SearchOutlined,
     PaperClipOutlined,
+    PlusCircleOutlined,
   } from '@ant-design/icons-vue'
 
   export default {
@@ -89,12 +115,14 @@
       AppContainer,
       RedoOutlined,
       SearchOutlined,
+      PlusCircleOutlined,
       AppPagination,
       PaperClipOutlined,
       AppPrice,
       AppOrderDetail,
       AppOrderStoreDetail,
       AppModal,
+      AppPersist,
     },
     computed: {
       ...mapGetters({
@@ -103,6 +131,7 @@
         currentPage: 'appOrder/purchaseOrder/pageInfo',
         perDetailOrder: 'appOrder/purchaseOrder/perDetailOrder',
         perDetailStore: 'appOrder/purchaseOrder/perDetailStore',
+        perPersist: 'appOrder/purchaseOrder/perPersist',
       }),
       tableColumns() {
         if (this.perDetailOrder) {
@@ -117,6 +146,9 @@
         detail: {
           visible: false,
           conponent: '',
+        },
+        persist: {
+          visible: false,
         },
         loading: {
           query: false,
@@ -199,6 +231,7 @@
       },
       refreshData() {
         this.detail.visible = false
+        this.persist.visible = false
         this.queryData()
       },
       recordOrderDetail(record) {
@@ -212,6 +245,9 @@
         this.queryDetailStore()
         this.detail.conponent = 'AppOrderStoreDetail'
         this.detail.visible = true
+      },
+      persistRecord() {
+        this.persist.visible = true
       },
     },
   }
