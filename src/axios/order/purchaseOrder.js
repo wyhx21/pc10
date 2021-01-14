@@ -21,6 +21,9 @@ const detailOrder = (orderId) =>
 const detailStore = (orderId) =>
   axios.doGet(`/store/storeProdDetail/orderNo/${orderId}`)
 
+const supplierPage = (param, page) =>
+  axios.doPost('/basic/supplier/supplier', param, page)
+
 export {
   queryPage,
   persistRecord,
@@ -29,4 +32,5 @@ export {
   transferRecord,
   detailOrder,
   detailStore,
+  supplierPage,
 }

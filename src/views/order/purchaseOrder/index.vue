@@ -204,6 +204,7 @@
       ...mapMutations({
         pageInfo: 'appOrder/purchaseOrder/pageInfo',
         setCurrentData: 'appOrder/purchaseOrder/currentData',
+        initPersist: 'appOrder/purchaseOrder/persist/init',
       }),
       ...mapActions({
         queryPage: 'appOrder/purchaseOrder/queryPage',
@@ -247,6 +248,7 @@
         this.detail.visible = true
       },
       persistRecord() {
+        this.initPersist()
         this.persist.visible = true
       },
     },
