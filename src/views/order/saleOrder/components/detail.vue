@@ -1,19 +1,19 @@
 <template>
   <app-container>
     <template #header>
-      <table class="app-purchase-order-detail_head">
+      <table class="app-sale-order-detail_head">
         <tr>
           <td>
             <span>订单号:</span>
             <span>{{ currentDate['orderNo'] }}</span>
           </td>
           <td>
-            <span>供应商编码:</span>
-            <span>{{ currentDate['supplierCode'] }}</span>
+            <span>客户编码:</span>
+            <span>{{ currentDate['cusCode'] }}</span>
           </td>
           <td>
-            <span>供应商名称:</span>
-            <span>{{ currentDate['supplierName'] }}</span>
+            <span>客户名称:</span>
+            <span>{{ currentDate['cusName'] }}</span>
           </td>
           <td>
             <span>状态:</span>
@@ -38,7 +38,7 @@
     </template>
     <slot></slot>
     <template #footer>
-      <div class="app-purchase-order-detail_footer">
+      <div class="app-sale-order-detail_footer">
         <slot name="footer">
           <a-button size="small" @click="cancel">退出</a-button>
         </slot>
@@ -57,7 +57,7 @@
     },
     computed: {
       ...mapGetters({
-        currentDate: 'appOrder/purchaseOrder/currentData',
+        currentDate: 'appOrder/saleOrder/currentData',
       }),
     },
     methods: {
@@ -68,7 +68,7 @@
   }
 </script>
 <style lang="scss">
-  .app-purchase-order-detail_head {
+  .app-sale-order-detail_head {
     width: calc(100% - 40px);
     margin: 0 20px;
     span {
@@ -86,7 +86,7 @@
       }
     }
   }
-  .app-purchase-order-detail_footer {
+  .app-sale-order-detail_footer {
     button {
       float: right;
       margin: 8px 8px 8px 0;

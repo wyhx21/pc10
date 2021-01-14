@@ -10,6 +10,15 @@ const order = [
     },
     children: [
       {
+        path: 'saleOrder',
+        name: '销售订单管理',
+        component: () => import('@/views/order/saleOrder'),
+        meta: {
+          title: '销售订单管理',
+          id: 300003001,
+        },
+      },
+      {
         path: 'purchaseOrder',
         name: '采购订单管理',
         component: () => import('@/views/order/purchaseOrder'),

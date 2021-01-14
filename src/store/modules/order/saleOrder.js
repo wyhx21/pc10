@@ -5,7 +5,7 @@ import {
   deleteRecord,
   submitRecord,
   transferRecord,
-} from '@axios/order/purchaseOrder.js'
+} from '@axios/order/saleOrder.js'
 
 export default {
   namespaced: true,
@@ -40,39 +40,39 @@ export default {
     detailList: (_state) => _state.detailList,
     perDetailOrder: (_state, _getters, _rootState, _rootGetters) => {
       const arr = _rootGetters['appSystem/userRoleAuth/pageRoleAuth'](
-        'order_info_purchase'
+        'order_info_sale'
       )
-      return arr.includes('order_info_purchase_detail_query')
+      return arr.includes('order_info_sale_detail_query')
     },
     perDetailStore: (_state, _getters, _rootState, _rootGetters) => {
       const arr = _rootGetters['appSystem/userRoleAuth/pageRoleAuth'](
-        'order_info_purchase'
+        'order_info_sale'
       )
-      return arr.includes('order_info_purchase_detail_store')
+      return arr.includes('order_info_sale_detail_store')
     },
     perSubmit: (_state, _getters, _rootState, _rootGetters) => {
       const arr = _rootGetters['appSystem/userRoleAuth/pageRoleAuth'](
-        'order_info_purchase'
+        'order_info_sale'
       )
-      return arr.includes('order_info_purchase_submit')
+      return arr.includes('order_info_sale_submit')
     },
     perTransfer: (_state, _getters, _rootState, _rootGetters) => {
       const arr = _rootGetters['appSystem/userRoleAuth/pageRoleAuth'](
-        'order_info_purchase'
+        'order_info_sale'
       )
-      return arr.includes('order_info_purchase_transfer')
+      return arr.includes('order_info_sale_transfer')
     },
     perDelete: (_state, _getters, _rootState, _rootGetters) => {
       const arr = _rootGetters['appSystem/userRoleAuth/pageRoleAuth'](
-        'order_info_purchase'
+        'order_info_sale'
       )
-      return arr.includes('order_info_purchase_delete')
+      return arr.includes('order_info_sale_delete')
     },
     perPersist: (_state, _getters, _rootState, _rootGetters) => {
       const arr = _rootGetters['appSystem/userRoleAuth/pageRoleAuth'](
-        'order_info_purchase'
+        'order_info_sale'
       )
-      return arr.includes('order_info_purchase_persist')
+      return arr.includes('order_info_sale_persist')
     },
   },
   mutations: {
