@@ -92,40 +92,6 @@
     },
   }
 </script>
-<style lang="scss" scope>
-  .order-persist-main_header {
-    text-align: center;
-    margin-bottom: 10px;
-    height: 90px;
-
-    .ant-row {
-      margin: 5px;
-    }
-
-    .ant-col-3 {
-      text-align: center;
-    }
-    .ant-col-5 {
-      .ant-input-number {
-        width: 100%;
-      }
-    }
-  }
-
-  .order-persist-main_table_header {
-    text-align: center;
-    line-height: 25px;
-    height: 25px;
-  }
-
-  .order-persist-main_table_main {
-    height: calc(100% - 125px);
-    overflow: auto;
-
-    .ant-row {
-      text-align: center;
-      line-height: 24px;
-      margin: 1px;
-    }
-  }
+<style lang="scss">
+  @import '@style/order.scss';
 </style>

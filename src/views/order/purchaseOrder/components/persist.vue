@@ -135,17 +135,5 @@
   }
 </script>
 <style lang="scss">
-  .order-persist {
-    height: calc(100% - 20px);
-    margin-top: 20px;
-  }
-  .order-persist_header {
-    text-align: center;
-    height: 30px;
-    margin-bottom: 10px;
-  }
-  .order-persist_main {
-    height: calc(100% - 40px);
-    overflow: auto;
-  }
+  @import '@style/order.scss';
 </style>
