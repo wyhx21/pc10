@@ -61,6 +61,9 @@
         <a-col :span="3">数量</a-col>
         <a-col :span="3">金额</a-col>
         <a-col :span="5">备注</a-col>
+        <a-col :span="1">
+          <a @click="toPage('AppProduct')"><PlusCircleOutlined /></a>
+        </a-col>
       </a-row>
     </div>
 
@@ -74,9 +77,11 @@
 <script>
   import { mapGetters, mapMutations } from 'vuex'
   import AppProduct from './persistMainProduct'
+  import { PlusCircleOutlined } from '@ant-design/icons-vue'
   export default {
     components: {
       AppProduct,
+      PlusCircleOutlined,
     },
     computed: {
       ...mapGetters({
@@ -88,6 +93,7 @@
       ...mapMutations({
         updateExtraAmount: 'appOrder/purchaseOrder/persist/updateExtraAmount',
         updateRemark: 'appOrder/purchaseOrder/persist/updateRemark',
+        toPage: 'appOrder/purchaseOrder/persist/toPage',
       }),
     },
   }
