@@ -28,9 +28,7 @@
           </a-button>
         </a-col>
         <a-col :span="2">
-          <a-button size="small" type="primary" @click="selectSupplier">
-            选择
-          </a-button>
+          <a-button size="small" type="primary" @click="submit">选择</a-button>
         </a-col>
         <a-col :span="2">
           <a-button size="small" @click="resetParam">重置</a-button>
@@ -49,7 +47,11 @@
         :data-source="supplierList"
         size="small"
         :pagination="false"
-      />
+      >
+        <template #choose="{ text, record }">
+          <div @click="onSelectChange([record['id']])">{{ text }}</div>
+        </template>
+      </a-table>
     </div>
   </div>
 </template>
@@ -80,12 +82,42 @@
       return {
         selectedRowKeys: [],
         columns: [
-          { title: '供应商编码', dataIndex: 'supplierCode', width: 120 },
-          { title: '供应商名称', dataIndex: 'supplierName', width: 120 },
-          { title: '联系人', dataIndex: 'linkName', width: 120 },
-          { title: '联系方式', dataIndex: 'mobile', width: 120 },
-          { title: '地址', dataIndex: 'address', ellipsis: true },
-          { title: '备注', dataIndex: 'remark', ellipsis: true },
+          {
+            title: '供应商编码',
+            dataIndex: 'supplierCode',
+            width: 120,
+            slots: { customRender: 'choose' },
+          },
+          {
+            title: '供应商名称',
+            dataIndex: 'supplierName',
+            width: 120,
+            slots: { customRender: 'choose' },
+          },
+          {
+            title: '联系人',
+            dataIndex: 'linkName',
+            width: 120,
+            slots: { customRender: 'choose' },
+          },
+          {
+            title: '联系方式',
+            dataIndex: 'mobile',
+            width: 120,
+            slots: { customRender: 'choose' },
+          },
+          {
+            title: '地址',
+            dataIndex: 'address',
+            ellipsis: true,
+            slots: { customRender: 'choose' },
+          },
+          {
+            title: '备注',
+            dataIndex: 'remark',
+            ellipsis: true,
+            slots: { customRender: 'choose' },
+          },
         ],
       }
     },
@@ -117,7 +149,7 @@
       onSelectChange(selectedRowKeys) {
         this.selectedRowKeys = selectedRowKeys
       },
-      selectSupplier() {
+      submit() {
         const [key] = this.selectedRowKeys
         if (!key) {
           Message({ message: '请选择一条记录', type: 'warning' })

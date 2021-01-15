@@ -1,4 +1,4 @@
-import { supplierPage } from '@axios/order/purchaseOrder.js'
+import { supplierPage, productPage } from '@axios/order/purchaseOrder.js'
 
 export default {
   namespaced: true,
@@ -79,6 +79,19 @@ export default {
         .then((result) => {
           const { total, data } = result
           commit('setSupplierList', data)
+          commit('setTotalSize', total)
+        })
+        .catch(() => {})
+    },
+    queryProduct: async ({ getters, commit }) => {
+      const { param1: prodCode, param2: prodName } = getters.param
+      const { page, size } = getters.pageInfo
+      commit('setProductList')
+      commit('setTotalSize')
+      productPage({ prodCode, prodName }, { page, size })
+        .then((result) => {
+          const { total, data } = result
+          commit('setProductList', data)
           commit('setTotalSize', total)
         })
         .catch(() => {})

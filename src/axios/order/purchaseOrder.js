@@ -24,6 +24,9 @@ const detailStore = (orderId) =>
 const supplierPage = (param, page) =>
   axios.doPost('/basic/supplier/supplier', param, page)
 
+const productPage = (param, page) =>
+  axios.doPost('/basic/product/purchase', param, page)
+
 export {
   queryPage,
   persistRecord,
@@ -33,4 +36,5 @@ export {
   detailOrder,
   detailStore,
   supplierPage,
+  productPage,
 }

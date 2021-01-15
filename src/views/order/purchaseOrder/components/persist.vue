@@ -45,6 +45,14 @@
         >
           返回主界面
         </a-button>
+        <a-button
+          size="small"
+          type="primary"
+          class="app-modal-footer-button"
+          @click="submitData"
+        >
+          选择
+        </a-button>
       </div>
       <!-- 供应商界面/商品界面 end -->
     </template>
@@ -83,6 +91,13 @@
       },
       confirmPersist() {
         alert('confirm')
+      },
+      submitData() {
+        if (this.conponent == 'AppSupplier') {
+          this.$refs.refPersistAppSupplier.submit()
+        } else if (this.conponent == 'AppProduct') {
+          this.$refs.refPersistAppProduct.submit()
+        }
       },
     },
   }
