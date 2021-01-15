@@ -126,18 +126,13 @@
       ...mapMutations({
         setProductCode: 'appOrder/purchaseOrder/persist/setParam1',
         setProductName: 'appOrder/purchaseOrder/persist/setParam2',
-        setPageInfo: 'appOrder/purchaseOrder/persist/setPageInfo',
         setOrderProductList:
           'appOrder/purchaseOrder/persist/setOrderProductList',
         toPage: 'appOrder/purchaseOrder/persist/toPage',
       }),
       ...mapActions({
-        queryProduct: 'appOrder/purchaseOrder/persist/queryProduct',
+        initQuery: 'appOrder/purchaseOrder/persist/initQuery',
       }),
-      initQuery() {
-        this.setPageInfo()
-        this.queryProduct()
-      },
       resetParam() {
         this.selectedRowKeys = this.orderProductList.map((item) => item['id'])
         this.setProductCode()

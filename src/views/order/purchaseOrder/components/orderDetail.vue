@@ -16,33 +16,39 @@
       <a-button class="app-modal-footer-button" size="small" @click="cancel">
         退出
       </a-button>
-      <a-button
-        class="app-modal-footer-button"
-        type="primary"
-        size="small"
+      <a-popconfirm
+        title="确认删除该订单信息"
+        ok-text="确认"
+        cancel-text="取消"
+        @confirm="delteData"
         v-if="perDelete && currentDate['orderStatus'] == 0"
-        @click="delteData"
       >
-        删除
-      </a-button>
-      <a-button
-        class="app-modal-footer-button"
-        type="primary"
-        size="small"
+        <a-button class="app-modal-footer-button" type="primary" size="small">
+          删除
+        </a-button>
+      </a-popconfirm>
+      <a-popconfirm
+        title="确认提交该订单信息"
+        ok-text="确认"
+        cancel-text="取消"
+        @confirm="submitData"
         v-if="perSubmit && currentDate['orderStatus'] == 0"
-        @click="submitData"
       >
-        提交
-      </a-button>
-      <a-button
-        class="app-modal-footer-button"
-        type="primary"
-        size="small"
+        <a-button class="app-modal-footer-button" type="primary" size="small">
+          提交
+        </a-button>
+      </a-popconfirm>
+      <a-popconfirm
+        title="确认交易该订单信息"
+        ok-text="确认"
+        cancel-text="取消"
+        @confirm="transferData"
         v-if="perTransfer && currentDate['orderStatus'] == 1"
-        @click="transferData"
       >
-        交易
-      </a-button>
+        <a-button class="app-modal-footer-button" type="primary" size="small">
+          交易
+        </a-button>
+      </a-popconfirm>
     </template>
   </app-container>
 </template>

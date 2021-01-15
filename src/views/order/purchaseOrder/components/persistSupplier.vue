@@ -125,17 +125,12 @@
       ...mapMutations({
         setSupplierCode: 'appOrder/purchaseOrder/persist/setParam1',
         setSupplierName: 'appOrder/purchaseOrder/persist/setParam2',
-        setPageInfo: 'appOrder/purchaseOrder/persist/setPageInfo',
         setSupplierInfo: 'appOrder/purchaseOrder/persist/setSupplier',
         toPage: 'appOrder/purchaseOrder/persist/toPage',
       }),
       ...mapActions({
-        querySupplier: 'appOrder/purchaseOrder/persist/querySupplier',
+        initQuery: 'appOrder/purchaseOrder/persist/initQuery',
       }),
-      initQuery() {
-        this.setPageInfo()
-        this.querySupplier()
-      },
       resetParam() {
         const key = this.supplier?.id
         if (key) {

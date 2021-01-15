@@ -1,4 +1,8 @@
-import { supplierPage, productPage } from '@axios/order/purchaseOrder.js'
+import {
+  supplierPage,
+  productPage,
+  persistRecord,
+} from '@axios/order/purchaseOrder.js'
 
 export default {
   namespaced: true,
@@ -12,8 +16,8 @@ export default {
     pageInfo: {
       page: 1,
       size: 10,
-      total: 0,
     },
+    pageTotal: 0,
     supplierList: [],
     productList: [],
     orderProductList: [],
@@ -24,6 +28,7 @@ export default {
     param1: (_state) => _state.param.param1,
     param2: (_state) => _state.param.param2,
     pageInfo: (_state) => _state.pageInfo,
+    pageTotal: (_state) => _state.pageTotal,
     supplier: (_state) => _state.supplier,
     orderProductList: (_state) => _state.orderProductList,
     supplierList: (_state) => _state.supplierList,
@@ -45,8 +50,8 @@ export default {
       _state.pageInfo = {
         page: 1,
         size: 10,
-        total: 0,
       }
+      _state.pageTotal = 0
       _state.productList = []
       _state.supplierList = []
       _state.conponent = page
@@ -56,10 +61,10 @@ export default {
 
     setParam1: (_state, value = '') => (_state.param.param1 = value),
     setParam2: (_state, value = '') => (_state.param.param2 = value),
-    setTotalSize: (_state, value = 0) => (_state.pageInfo.total = value),
+    setTotalSize: (_state, value = 0) => (_state.pageTotal = value),
     setPageInfo: (_state, { page = 1, size = 10 } = {}) => {
       page = page < 1 ? 1 : page
-      ;(_state.pageInfo.page = page), (_state.pageInfo.size = size)
+      _state.pageInfo = { page, size }
     },
 
     setSupplier: (_state, supplier = {}) => (_state.supplier = supplier),
@@ -68,8 +73,36 @@ export default {
 
     setSupplierList: (_state, list = []) => (_state.supplierList = list),
     setProductList: (_state, list = []) => (_state.productList = list),
+
+    updateProduct: (_state, { id, price = 0, prodNum = 0 }) => {
+      const _orderProductList = _state.orderProductList
+      const [rowData] = _orderProductList.filter((item) => item['id'] == id)
+      const prodAmount = price * prodNum
+      Object.assign(rowData, { price, prodNum, prodAmount })
+    },
+    updateProdRemark: (_state, { id, itemRemark }) => {
+      const _orderProductList = _state.orderProductList
+      const [rowData] = _orderProductList.filter((item) => item['id'] == id)
+      Object.assign(rowData, { itemRemark })
+    },
+    deleteOrderProduct: (_state, id) => {
+      _state.orderProductList = _state.orderProductList.filter(
+        (item) => item['id'] != id
+      )
+    },
   },
   actions: {
+    initQuery: async (
+      { dispatch, getters, commit },
+      { page = 1, size = 10 } = {}
+    ) => {
+      commit('setPageInfo', { page, size })
+      if (getters.conponent == 'AppSupplier') {
+        dispatch('querySupplier')
+      } else if (getters.conponent == 'AppProduct') {
+        dispatch('queryProduct')
+      }
+    },
     querySupplier: async ({ getters, commit }) => {
       const { param1: supplierCode, param2: supplierName } = getters.param
       const { page, size } = getters.pageInfo
@@ -95,6 +128,32 @@ export default {
           commit('setTotalSize', total)
         })
         .catch(() => {})
+    },
+    persistOrder: async ({ getters }) => {
+      const supplier = getters.supplier
+      const prodList = getters.orderProductList
+      const data = {
+        supplierId: supplier['id'],
+        extraAmount: supplier['extraAmount'],
+        remark: supplier['remark'],
+      }
+      const detailList = prodList.map((item) => {
+        const [prodId, prodNum, prodPrice, remark] = [
+          item['id'],
+          item['prodNum'],
+          item['price'],
+          item['itemRemark'],
+        ]
+        return { prodId, prodNum, prodPrice, remark }
+      })
+      Object.assign(data, { detailList })
+      return new Promise((resolve, reject) => {
+        persistRecord(data)
+          .then(() => {
+            resolve()
+          })
+          .catch((err) => reject(err))
+      })
     },
   },
 }

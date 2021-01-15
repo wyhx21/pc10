@@ -31,6 +31,9 @@
       fontWeight: {
         default: 600,
       },
+      precision: {
+        default: 2,
+      },
     },
     data() {
       return {
@@ -46,8 +49,8 @@
       },
       numDecimal() {
         const dec = `${this.modelValue}.00`.split(/\./g)[1].padEnd(2, '00')
-        if (dec.length > 4) {
-          return dec.substring(0, 4)
+        if (dec.length > this.precision) {
+          return dec.substring(0, this.precision)
         }
         return dec
       },
