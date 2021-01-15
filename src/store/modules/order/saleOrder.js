@@ -6,9 +6,13 @@ import {
   submitRecord,
   transferRecord,
 } from '@axios/order/saleOrder.js'
+import persist from './salePersist.js'
 
 export default {
   namespaced: true,
+  modules: {
+    persist,
+  },
   state: {
     pageInfo: {
       page: 1,

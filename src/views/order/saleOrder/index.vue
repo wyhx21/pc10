@@ -68,11 +68,7 @@
       :maskClosable="false"
       v-model:visible="persist.visible"
     >
-      <app-persist
-        @cancel="persist.visible = false"
-        :is="detail.conponent"
-        @refresh="refreshData"
-      />
+      <app-persist @cancel="persist.visible = false" @refresh="refreshData" />
     </app-modal>
     <!-- 新增 end -->
 
@@ -204,6 +200,7 @@
       ...mapMutations({
         pageInfo: 'appOrder/saleOrder/pageInfo',
         setCurrentData: 'appOrder/saleOrder/currentData',
+        initPersist: 'appOrder/saleOrder/persist/init',
       }),
       ...mapActions({
         queryPage: 'appOrder/saleOrder/queryPage',
@@ -247,6 +244,7 @@
         this.detail.visible = true
       },
       persistRecord() {
+        this.initPersist()
         this.persist.visible = true
       },
     },

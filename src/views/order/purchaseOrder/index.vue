@@ -68,11 +68,7 @@
       :maskClosable="false"
       v-model:visible="persist.visible"
     >
-      <app-persist
-        @cancel="persist.visible = false"
-        :is="detail.conponent"
-        @refresh="refreshData"
-      />
+      <app-persist @cancel="persist.visible = false" @refresh="refreshData" />
     </app-modal>
     <!-- 新增 end -->
 
