@@ -149,7 +149,7 @@
             slots: { customRender: 'toArea' },
           },
           {
-            title: '操作信息',
+            title: '创建信息',
             dataIndex: 'lastModifiedBy',
             slots: { customRender: 'action' },
           },

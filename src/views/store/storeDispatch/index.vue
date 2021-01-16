@@ -42,7 +42,12 @@
     </template>
 
     <!-- 详情 begin -->
-    <app-modal v-model:visible="visible.detail" width="800px" height="450px">
+    <app-modal
+      v-model:visible="visible.detail"
+      :maskClosable="false"
+      width="800px"
+      height="450px"
+    >
       <app-detail @cancel="visible.detail = false" @refresh="refreshData" />
     </app-modal>
     <!-- 详情 end -->
