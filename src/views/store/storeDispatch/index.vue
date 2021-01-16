@@ -29,7 +29,7 @@
       :pagination="false"
     >
       <template #action="{ record }">
-        <a @click="editRecord(record)" v-if="perMerge"><EditOutlined /></a>
+        <a @click="editRecord(record)" v-if="perDetail"><EditOutlined /></a>
       </template>
     </a-table>
 
@@ -40,13 +40,28 @@
         @change="onPageChange"
       />
     </template>
+
+    <!-- 详情 begin -->
+    <app-modal
+      v-model:visible="visible.detail"
+      :loading="loading.detail"
+      title="调度详情"
+      width="800px"
+      height="450px"
+      @confirm="confirmMerge"
+    >
+      <app-detail />
+    </app-modal>
+    <!-- 详情 end -->
   </app-container>
 </template>
 <script>
   import { mapGetters, mapMutations, mapActions } from 'vuex'
   import AppContainer from '@com/container'
   import AppPagination from '@com/pagination'
+  import AppModal from '@com/modal'
   import AppParam from './components/param'
+  import AppDetail from './components/detail'
   import {
     RedoOutlined,
     SearchOutlined,
@@ -62,17 +77,19 @@
       AppContainer,
       AppPagination,
       AppParam,
+      AppModal,
+      AppDetail,
     },
     computed: {
       ...mapGetters({
         dataList: 'appStore/storeDispatch/dataList',
         perPersist: 'appStore/storeDispatch/perPersist',
-        perMerge: 'appStore/storeDispatch/perMerge',
+        perDetail: 'appStore/storeDispatch/perDetail',
         totalPageSize: 'appStore/storeDispatch/totalPageSize',
         currentPage: 'appStore/storeDispatch/pageInfo',
       }),
       tableColumns() {
-        if (this.perMerge) {
+        if (this.perDetail) {
           return this.columns
         } else {
           return this.columns.filter((item) => item['dataIndex'] != 'id')
@@ -83,12 +100,10 @@
       return {
         loading: {
           query: false,
-          merge: false,
-          persist: false,
+          detail: false,
         },
         visible: {
-          merge: false,
-          persist: false,
+          detail: false,
         },
         columns: [
           { title: '订单号', dataIndex: 'orderNo', width: 200 },
@@ -119,6 +134,7 @@
       }),
       ...mapActions({
         queryPage: 'appStore/storeDispatch/queryPage',
+        queryDetail: 'appStore/storeDispatch/queryDetail',
       }),
       initQueryData() {
         this.pageInfo()
@@ -141,7 +157,8 @@
       },
       editRecord(record) {
         this.currentData(record)
-        this.visible.merge = true
+        this.queryDetail()
+        this.visible.detail = true
       },
     },
   }

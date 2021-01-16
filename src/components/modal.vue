@@ -11,25 +11,27 @@
     </div>
 
     <template #footer>
-      <a-popconfirm
-        :title="saveTitle"
-        ok-text="确认"
-        cancel-text="取消"
-        @confirm="onConfirm"
-      >
-        <a-button type="primary" size="small" :loading="loading">
-          {{ saveButton }}
-        </a-button>
-      </a-popconfirm>
-      <!-- <a-popconfirm
-        :title="cancelTitle"
-        ok-text="确认"
-        cancel-text="取消"
-        @confirm="onCancel"
-      >
-        <a-button size="small">{{ cancelButton }}</a-button>
-      </a-popconfirm> -->
-      <a-button size="small" @click="onCancel">{{ cancelButton }}</a-button>
+      <slot name="footer">
+        <a-popconfirm
+          :title="saveTitle"
+          ok-text="确认"
+          cancel-text="取消"
+          @confirm="onConfirm"
+        >
+          <a-button type="primary" size="small" :loading="loading">
+            {{ saveButton }}
+          </a-button>
+        </a-popconfirm>
+        <!-- <a-popconfirm
+          :title="cancelTitle"
+          ok-text="确认"
+          cancel-text="取消"
+          @confirm="onCancel"
+        >
+          <a-button size="small">{{ cancelButton }}</a-button>
+        </a-popconfirm> -->
+        <a-button size="small" @click="onCancel">{{ cancelButton }}</a-button>
+      </slot>
     </template>
   </a-modal>
 </template>

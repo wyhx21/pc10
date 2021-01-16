@@ -1,4 +1,4 @@
-import { queryPage } from '@axios/store/storeDispatch.js'
+import { queryPage, queryDetail } from '@axios/store/storeDispatch.js'
 
 export default {
   namespaced: true,
@@ -19,9 +19,11 @@ export default {
     },
     dataList: [],
     currentData: {},
+    detailList: [],
   },
   getters: {
     dataList: (_state) => _state.dataList,
+    detailList: (_state) => _state.detailList,
     params: (_state) => _state.params,
     pageInfo: (_state) => _state.pageInfo,
     currentData: (_state) => _state.currentData,
@@ -62,6 +64,7 @@ export default {
     },
     queryParam: (_state, params = {}) => (_state.params = params),
     dataList: (_state, list = []) => (_state.dataList = list),
+    detailList: (_state, list = []) => (_state.detailList = list),
     currentData: (_state, data = {}) => (_state.currentData = data),
   },
   actions: {
@@ -78,6 +81,15 @@ export default {
             reject(err)
           })
       })
+    },
+    queryDetail: async ({ getters, commit }) => {
+      commit('detailList')
+      const { id } = getters.currentData
+      queryDetail(id)
+        .then((res) => {
+          commit('detailList', res)
+        })
+        .catch(() => {})
     },
     // todo
   },

@@ -25,10 +25,11 @@
               target="_blank"
               href="https://github.com/chuzhixin/vue-admin-beautiful/tree/vue3.0-antdv"
             >
-              <img
+              图片
+              <!-- <img
                 style="margin-right: 10px"
                 src="https://img.shields.io/github/stars/chuzhixin/vue-admin-beautiful?style=flat-square&label=Stars&logo=github"
-              />
+              /> -->
             </a>
           </td>
           <td>下载量统计</td>
