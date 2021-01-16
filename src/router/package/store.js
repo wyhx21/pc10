@@ -19,6 +19,15 @@ const store = [
         },
       },
       {
+        path: 'instore',
+        name: '订单入库',
+        component: () => import('@/views/store/instore'),
+        meta: {
+          title: '订单入库',
+          id: 300002002,
+        },
+      },
+      {
         path: 'outstore',
         name: '订单出库',
         component: () => import('@/views/store/outstore'),
@@ -28,12 +37,12 @@ const store = [
         },
       },
       {
-        path: 'instore',
-        name: '订单入库',
-        component: () => import('@/views/store/instore'),
+        path: 'storeDispacher',
+        name: '库存调度',
+        component: () => import('@/views/store/storeDispatch'),
         meta: {
-          title: '订单入库',
-          id: 300002002,
+          title: '库存调度',
+          id: 300002005,
         },
       },
       {
