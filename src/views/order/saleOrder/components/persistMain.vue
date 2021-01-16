@@ -85,7 +85,7 @@
       ...mapMutations({
         updateExtraAmount: 'appOrder/saleOrder/persist/updateExtraAmount',
         updateRemark: 'appOrder/saleOrder/persist/updateRemark',
-        toPage: 'appOrder/purchaseOrder/persist/toPage',
+        toPage: 'appOrder/saleOrder/persist/toPage',
       }),
     },
   }
