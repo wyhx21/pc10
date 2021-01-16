@@ -1,4 +1,9 @@
-import { queryPage, queryDetail } from '@axios/store/storeDispatch.js'
+import {
+  queryPage,
+  queryDetail,
+  mergeRecord,
+  deleteRecord,
+} from '@axios/store/storeDispatch.js'
 
 export default {
   namespaced: true,
@@ -90,6 +95,14 @@ export default {
           commit('detailList', res)
         })
         .catch(() => {})
+    },
+    deleteRecord: async ({ getters }) => {
+      const { id } = getters.currentData
+      return deleteRecord(id)
+    },
+    confirmRecord: async ({ getters }) => {
+      const { id } = getters.currentData
+      return mergeRecord(id)
     },
     // todo
   },

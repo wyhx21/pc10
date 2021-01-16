@@ -42,15 +42,8 @@
     </template>
 
     <!-- 详情 begin -->
-    <app-modal
-      v-model:visible="visible.detail"
-      :loading="loading.detail"
-      title="调度详情"
-      width="800px"
-      height="450px"
-      @confirm="confirmMerge"
-    >
-      <app-detail />
+    <app-modal v-model:visible="visible.detail" width="800px" height="450px">
+      <app-detail @cancel="visible.detail = false" @refresh="refreshData" />
     </app-modal>
     <!-- 详情 end -->
   </app-container>
@@ -59,7 +52,7 @@
   import { mapGetters, mapMutations, mapActions } from 'vuex'
   import AppContainer from '@com/container'
   import AppPagination from '@com/pagination'
-  import AppModal from '@com/modal'
+  import AppModal from '@com/modalBlank'
   import AppParam from './components/param'
   import AppDetail from './components/detail'
   import {
@@ -100,7 +93,6 @@
       return {
         loading: {
           query: false,
-          detail: false,
         },
         visible: {
           detail: false,
@@ -159,6 +151,10 @@
         this.currentData(record)
         this.queryDetail()
         this.visible.detail = true
+      },
+      refreshData() {
+        this.visible.detail = false
+        this.queryData()
       },
     },
   }

@@ -5,31 +5,33 @@
         <tr>
           <td width="35%">
             <span>订单号:</span>
-            <span>{{ record['orderNo'] }}</span>
+            <span>{{ currentData['orderNo'] }}</span>
           </td>
           <td width="35%">
             <span>调出仓库:</span>
-            <span>{{ record['storeName'] }}({{ record['storeCode'] }})</span>
+            <span>
+              {{ currentData['storeName'] }}({{ currentData['storeCode'] }})
+            </span>
           </td>
           <td>
             <span>更新人:</span>
-            <span>{{ record['lastModifiedBy'] }}</span>
+            <span>{{ currentData['lastModifiedBy'] }}</span>
           </td>
         </tr>
         <tr>
           <td>
             <span>更新时间:</span>
-            <span>{{ record['lastModifiedDate'] }}</span>
+            <span>{{ currentData['lastModifiedDate'] }}</span>
           </td>
           <td>
             <span>调入仓库:</span>
             <span>
-              {{ record['toStoreName'] }}({{ record['toStoreCode'] }})
+              {{ currentData['toStoreName'] }}({{ currentData['toStoreCode'] }})
             </span>
           </td>
           <td>
             <span>状态:</span>
-            <span>{{ record['disPacherStatusValue'] }}</span>
+            <span>{{ currentData['disPacherStatusValue'] }}</span>
           </td>
         </tr>
       </table>
@@ -63,11 +65,49 @@
         <span>({{ record['lastModifiedDate'] }})</span>
       </template>
     </a-table>
+
+    <template #footer>
+      <a-button class="app-modal-footer-button" size="small" @click="onCancel">
+        取消
+      </a-button>
+      <a-popconfirm
+        title="确认删除该记录?"
+        ok-text="确认"
+        cancel-text="取消"
+        v-if="perDelete && currentData['disPacherStatus'] == 0"
+        @confirm="onDelete"
+      >
+        <a-button
+          class="app-modal-footer-button"
+          type="primary"
+          size="small"
+          :loading="loading.delete"
+        >
+          删除
+        </a-button>
+      </a-popconfirm>
+      <a-popconfirm
+        title="确认提交该记录?"
+        ok-text="确认"
+        cancel-text="取消"
+        v-if="perMerge && currentData['disPacherStatus'] == 0"
+        @confirm="onConfirm"
+      >
+        <a-button
+          class="app-modal-footer-button"
+          type="primary"
+          size="small"
+          :loading="loading.confrim"
+        >
+          确认
+        </a-button>
+      </a-popconfirm>
+    </template>
   </app-container>
 </template>
 <script>
   import AppContainer from '@com/flexContainer'
-  import { mapGetters } from 'vuex'
+  import { mapGetters, mapActions } from 'vuex'
   export default {
     components: {
       AppContainer,
@@ -75,11 +115,17 @@
     computed: {
       ...mapGetters({
         dataList: 'appStore/storeDispatch/detailList',
-        record: 'appStore/storeDispatch/currentData',
+        currentData: 'appStore/storeDispatch/currentData',
+        perDelete: 'appStore/storeDispatch/perDelete',
+        perMerge: 'appStore/storeDispatch/perMerge',
       }),
     },
     data() {
       return {
+        loading: {
+          delete: false,
+          confrim: false,
+        },
         currentRow: {},
         columns: [
           {
@@ -110,11 +156,45 @@
         ],
       }
     },
+    methods: {
+      ...mapActions({
+        deleteRecord: 'appStore/storeDispatch/deleteRecord',
+        confirmRecord: 'appStore/storeDispatch/confirmRecord',
+      }),
+      onCancel() {
+        this.$emit('cancel', false)
+      },
+      refresh() {
+        this.$emit('refresh', true)
+      },
+      onDelete() {
+        this.loading.delete = true
+        this.deleteRecord()
+          .then(() => {
+            this.loading.delete = false
+            this.refresh()
+          })
+          .catch(() => {
+            this.loading.delete = false
+          })
+      },
+      onConfirm() {
+        this.loading.confrim = true
+        this.confirmRecord()
+          .then(() => {
+            this.loading.confrim = false
+            this.refresh()
+          })
+          .catch(() => {
+            this.loading.confrim = false
+          })
+      },
+    },
   }
 </script>
 <style lang="scss">
   .app-store-dispatch-detail-head {
     width: calc(100% - 40px);
-    margin: 5px 20px;
+    margin: 20px 20px 5px;
   }
 </style>
