@@ -19,6 +19,15 @@ const store = [
         },
       },
       {
+        path: 'instore',
+        name: '订单入库',
+        component: () => import('@/views/store/instore'),
+        meta: {
+          title: '订单入库',
+          id: 300002002,
+        },
+      },
+      {
         path: 'storeProd',
         name: '库存信息',
         component: () => import('@/views/store/storeProd'),

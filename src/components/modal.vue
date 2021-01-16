@@ -21,14 +21,15 @@
           {{ saveButton }}
         </a-button>
       </a-popconfirm>
-      <a-popconfirm
+      <!-- <a-popconfirm
         :title="cancelTitle"
         ok-text="确认"
         cancel-text="取消"
         @confirm="onCancel"
       >
         <a-button size="small">{{ cancelButton }}</a-button>
-      </a-popconfirm>
+      </a-popconfirm> -->
+      <a-button size="small" @click="onCancel">{{ cancelButton }}</a-button>
     </template>
   </a-modal>
 </template>
