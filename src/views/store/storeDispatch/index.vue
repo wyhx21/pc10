@@ -11,6 +11,15 @@
       </a-button>
       <a-button
         type="primary"
+        @click="persistData"
+        size="small"
+        v-if="perPersist"
+      >
+        <template #icon><PlusCircleOutlined /></template>
+        新增
+      </a-button>
+      <a-button
+        type="primary"
         :loading="loading.query"
         @click="initQueryData"
         size="small"
@@ -40,16 +49,27 @@
         @change="onPageChange"
       />
     </template>
+    <!-- 新增 begin -->
+    <app-modal
+      v-model:visible="visible.persist"
+      :maskClosable="false"
+      title="调度新增"
+      width="800px"
+      height="350px"
+    >
+      <app-persist @cancel="visible.persist = false" @refresh="refreshData" />
+    </app-modal>
+    <!-- 新增 end -->
 
     <!-- 详情 begin -->
-    <app-modal
+    <app-modal-blank
       v-model:visible="visible.detail"
       :maskClosable="false"
       width="800px"
       height="450px"
     >
       <app-detail @cancel="visible.detail = false" @refresh="refreshData" />
-    </app-modal>
+    </app-modal-blank>
     <!-- 详情 end -->
   </app-container>
 </template>
@@ -57,26 +77,30 @@
   import { mapGetters, mapMutations, mapActions } from 'vuex'
   import AppContainer from '@com/container'
   import AppPagination from '@com/pagination'
-  import AppModal from '@com/modalBlank'
+  import AppModal from '@com/modal'
+  import AppModalBlank from '@com/modalBlank'
   import AppParam from './components/param'
   import AppDetail from './components/detail'
+  import AppPersist from './components/persist'
   import {
     RedoOutlined,
     SearchOutlined,
     EditOutlined,
-    // PlusCircleOutlined,
+    PlusCircleOutlined,
   } from '@ant-design/icons-vue'
   export default {
     components: {
       SearchOutlined,
       EditOutlined,
-      // PlusCircleOutlined,
+      PlusCircleOutlined,
       RedoOutlined,
       AppContainer,
       AppPagination,
       AppParam,
       AppModal,
+      AppModalBlank,
       AppDetail,
+      AppPersist,
     },
     computed: {
       ...mapGetters({
@@ -101,6 +125,7 @@
         },
         visible: {
           detail: false,
+          persist: false,
         },
         columns: [
           { title: '订单号', dataIndex: 'orderNo', width: 200 },
@@ -128,6 +153,7 @@
       ...mapMutations({
         pageInfo: 'appStore/storeDispatch/pageInfo',
         currentData: 'appStore/storeDispatch/currentData',
+        persistInit: 'appStore/storeDispatch/persist/init',
       }),
       ...mapActions({
         queryPage: 'appStore/storeDispatch/queryPage',
@@ -159,7 +185,12 @@
       },
       refreshData() {
         this.visible.detail = false
+        this.visible.persist = false
         this.queryData()
+      },
+      persistData() {
+        this.persistInit()
+        this.visible.persist = true
       },
     },
   }

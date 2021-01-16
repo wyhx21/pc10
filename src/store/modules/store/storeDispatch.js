@@ -4,9 +4,13 @@ import {
   mergeRecord,
   deleteRecord,
 } from '@axios/store/storeDispatch.js'
+import persist from './storeDispatchPersist.js'
 
 export default {
   namespaced: true,
+  modules: {
+    persist,
+  },
   state: {
     pageInfo: {
       page: 1,

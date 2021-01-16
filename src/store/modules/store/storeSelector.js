@@ -24,7 +24,7 @@ export default {
         querySysStore()
           .then((res) => {
             commit('setStoreList', res)
-            resolve()
+            resolve(res)
           })
           .catch(() => {
             commit('setStoreList')
@@ -34,14 +34,14 @@ export default {
     },
     queryStoreArea: async ({ commit }, storeId) => {
       commit('setStoreAreaList')
-      if (!storeId) {
-        return
-      }
       return new Promise((resolve, reject) => {
+        if (!storeId) {
+          return resolve()
+        }
         queryStoreArea(storeId)
           .then((res) => {
             commit('setStoreAreaList', res)
-            resolve()
+            resolve(res)
           })
           .catch(() => {
             commit('setStoreAreaList')
