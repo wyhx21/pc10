@@ -11,4 +11,13 @@ const exportData = (data) => axios.doPost(`/store/storeProd/export`, data)
 const queryAreaProdNum = ({ areaId, productId }) =>
   axios.doGet(`/store/storeProd/findAreaProd/${areaId}/${productId}`)
 
-export { queryPage, queryDetailPage, exportData, queryAreaProdNum }
+const queryAreaProdList = (areaId) =>
+  axios.doGet(`/store/storeProd/prodList/${areaId}`)
+
+export {
+  queryPage,
+  queryDetailPage,
+  exportData,
+  queryAreaProdNum,
+  queryAreaProdList,
+}

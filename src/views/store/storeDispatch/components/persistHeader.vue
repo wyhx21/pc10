@@ -6,9 +6,10 @@
         <div>
           <a-select
             :value="sourceStoreId"
-            @update:value="setSourceStoreId"
+            :disabled="storeDisabled"
             placeholder="调出仓库"
             style="width: 150px"
+            @change="selectSourceStore"
           >
             <a-select-option v-for="opt in storeList" :key="opt['code']">
               {{ opt['value'] }}
@@ -21,9 +22,10 @@
         <div>
           <a-select
             :value="toStoreId"
-            @update:value="setToStoreId"
+            :disabled="storeDisabled"
             placeholder="调入仓库"
             style="width: 150px"
+            @change="selectToStore"
           >
             <a-select-option v-for="opt in storeList" :key="opt['code']">
               {{ opt['value'] }}
@@ -55,6 +57,7 @@
         sourceStoreId: 'appStore/storeDispatch/persist/sourceStoreId',
         toStoreId: 'appStore/storeDispatch/persist/toStoreId',
         remark: 'appStore/storeDispatch/persist/remark',
+        storeDisabled: 'appStore/storeDispatch/persist/storeDisabled',
       }),
     },
     data() {
@@ -75,6 +78,22 @@
         querySysStore: 'appStore/storeSelector/querySysStore',
         queryStoreArea: 'appStore/storeSelector/queryStoreArea',
       }),
+      selectSourceStore(storeId) {
+        this.queryStoreArea(storeId)
+          .then((res) => {
+            this.setSourceAreaList(res)
+            this.setSourceStoreId(storeId)
+          })
+          .catch(() => {})
+      },
+      selectToStore(storeId) {
+        this.queryStoreArea(storeId)
+          .then((res) => {
+            this.setToAreaList(res)
+            this.setToStoreId(storeId)
+          })
+          .catch(() => {})
+      },
     },
   }
 </script>

@@ -53,9 +53,11 @@
     <app-modal
       v-model:visible="visible.persist"
       :maskClosable="false"
+      :loading="loading.persist"
       title="调度新增"
       width="800px"
       height="350px"
+      @confirm="confirmPersist"
     >
       <app-persist @cancel="visible.persist = false" @refresh="refreshData" />
     </app-modal>
@@ -122,6 +124,7 @@
       return {
         loading: {
           query: false,
+          persist: false,
         },
         visible: {
           detail: false,
@@ -158,6 +161,7 @@
       ...mapActions({
         queryPage: 'appStore/storeDispatch/queryPage',
         queryDetail: 'appStore/storeDispatch/queryDetail',
+        persistRecord: 'appStore/storeDispatch/persist/persistRecord',
       }),
       initQueryData() {
         this.pageInfo()
@@ -191,6 +195,18 @@
       persistData() {
         this.persistInit()
         this.visible.persist = true
+      },
+      confirmPersist() {
+        this.loading.persist = true
+        this.persistRecord()
+          .then(() => {
+            this.loading.persist = false
+            this.visible.persist = false
+            this.queryData()
+          })
+          .catch(() => {
+            this.loading.persist = false
+          })
       },
     },
   }
