@@ -11,6 +11,15 @@
       </a-button>
       <a-button
         type="primary"
+        @click="persistData"
+        size="small"
+        v-if="perPersist"
+      >
+        <template #icon><PlusCircleOutlined /></template>
+        新增
+      </a-button>
+      <a-button
+        type="primary"
         :loading="loading.query"
         @click="initQueryData"
         size="small"
@@ -44,15 +53,29 @@
     </template>
 
     <!-- 详情 begin -->
-    <app-modal
+    <app-modal-blank
       width="800px"
       height="450px"
       :maskClosable="false"
       v-model:visible="visible.detail"
     >
       <app-detail @cancel="visible.detail = false" @refresh="refreshData" />
-    </app-modal>
+    </app-modal-blank>
     <!-- 详情 end -->
+
+    <!-- 新增 begin -->
+    <app-modal
+      v-model:visible="visible.persist"
+      :maskClosable="false"
+      :loading="loading.persist"
+      title="库存核销新增"
+      width="800px"
+      height="350px"
+      @confirm="confirmPersist"
+    >
+      <app-persist @cancel="visible.persist = false" />
+    </app-modal>
+    <!-- 新增 end -->
   </app-container>
 </template>
 <script>
@@ -60,28 +83,35 @@
   import AppParam from './components/param'
   import AppContainer from '@com/container'
   import AppPagination from '@com/pagination'
-  import AppModal from '@com/modalBlank'
+  import AppModalBlank from '@com/modalBlank'
+  import AppModal from '@com/modal'
   import AppDetail from './components/detail'
+  import AppPersist from './components/persist'
   import {
     RedoOutlined,
     SearchOutlined,
     PaperClipOutlined,
+    PlusCircleOutlined,
   } from '@ant-design/icons-vue'
   export default {
     components: {
       AppParam,
       SearchOutlined,
       PaperClipOutlined,
+      PlusCircleOutlined,
       RedoOutlined,
       AppContainer,
       AppPagination,
+      AppModalBlank,
       AppModal,
       AppDetail,
+      AppPersist,
     },
     computed: {
       ...mapGetters({
         dataList: 'appStore/storeVerify/dataList',
         perDetail: 'appStore/storeVerify/perDetail',
+        perPersist: 'appStore/storeVerify/perPersist',
         totalPageSize: 'appStore/storeVerify/totalPageSize',
         currentPage: 'appStore/storeVerify/pageInfo',
       }),
@@ -127,10 +157,12 @@
       ...mapMutations({
         pageInfo: 'appStore/storeVerify/pageInfo',
         currentData: 'appStore/storeVerify/currentData',
+        persistInit: 'appStore/storeVerify/persist/init',
       }),
       ...mapActions({
         queryPage: 'appStore/storeVerify/queryPage',
         queryDetailData: 'appStore/storeVerify/queryDetail',
+        persistRecord: 'appStore/storeVerify/persist/persistRecord',
       }),
       initQueryData() {
         this.pageInfo()
@@ -160,6 +192,22 @@
         this.currentData(record)
         this.queryDetailData()
         this.visible.detail = true
+      },
+      persistData() {
+        this.persistInit()
+        this.visible.persist = true
+      },
+      confirmPersist() {
+        this.loading.persist = true
+        this.persistRecord()
+          .then(() => {
+            this.loading.persist = false
+            this.visible.persist = false
+            this.queryData()
+          })
+          .catch(() => {
+            this.loading.persist = false
+          })
       },
     },
   }

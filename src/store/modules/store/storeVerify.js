@@ -5,9 +5,13 @@ import {
   orderDelete,
 } from '@axios/store/storeVerify.js'
 import { verifyTypeList } from '@axios/dict/verifyType.js'
+import persist from './storeVerifyPersist.js'
 
 export default {
   namespaced: true,
+  modules: {
+    persist,
+  },
   state: {
     pageInfo: {
       page: 1,
