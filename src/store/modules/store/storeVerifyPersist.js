@@ -1,3 +1,5 @@
+import { queryAreaProdList } from '@axios/store/storeProd.js'
+import { Message } from '@utils/messagerUtil.js'
 export default {
   namespaced: true,
   state: {
@@ -43,8 +45,117 @@ export default {
         (item) => item['detailId'] != detailId
       )
     },
+
+    setAreaId: (_state, { detailId, areaId, list = [] }) => {
+      const [row] = _state.detailList.filter(
+        (item) => item['detailId'] == detailId
+      )
+      if (!row) {
+        return
+      }
+      const prodList = list.map((item) => {
+        const { id: storeProdId, prodName, prodNum, prodUnit } = item
+        return { storeProdId, prodName, prodNum, prodUnit }
+      })
+      row['keyIndex']++
+      Object.assign(row, {
+        areaId,
+        prodList,
+      })
+      delete row['storeProdId']
+      delete row['storeNum']
+      delete row['verifiType']
+      delete row['prodNum']
+      delete row['remark']
+    },
+    selectProduct: (_state, { detailId, storeProdId }) => {
+      const [row] = _state.detailList.filter(
+        (item) => item['detailId'] == detailId
+      )
+      if (!row) {
+        return
+      }
+      const { prodList } = row
+      if (!prodList) {
+        return
+      }
+      const [prod] = prodList.filter(
+        (item) => item['storeProdId'] == storeProdId
+      )
+      if (!prod) {
+        return
+      }
+      const oldCount = _state.detailList.filter(
+        (item) => item['storeProdId'] == storeProdId
+      ).length
+      if (oldCount > 0) {
+        Message({ message: '该记录已存在，请不要重复添加' })
+        delete row['verifiType']
+        delete row['prodNum']
+        delete row['remark']
+        delete row['storeProdId']
+        delete row['storeNum']
+        row['keyIndex']++
+        return
+      }
+      const { prodNum, prodUnit } = prod
+      const storeNum = `${prodNum}(${prodUnit})`
+      row['keyIndex']++
+      Object.assign(row, {
+        storeProdId,
+        storeNum,
+      })
+      delete row['verifiType']
+      delete row['prodNum']
+      delete row['remark']
+    },
+    selectVerifyType: (_state, { verifiType, detailId }) => {
+      const [row] = _state.detailList.filter(
+        (item) => item['detailId'] == detailId
+      )
+      if (!row) {
+        return
+      }
+      row['keyIndex']++
+      Object.assign(row, {
+        verifiType,
+      })
+      delete row['prodNum']
+      delete row['remark']
+    },
+    updateProdNum: (_state, { prodNum, detailId }) => {
+      const [row] = _state.detailList.filter(
+        (item) => item['detailId'] == detailId
+      )
+      if (!row) {
+        return
+      }
+      Object.assign(row, {
+        prodNum,
+      })
+    },
+    updateRemark: (_state, { remark, detailId }) => {
+      const [row] = _state.detailList.filter(
+        (item) => item['detailId'] == detailId
+      )
+      if (!row) {
+        return
+      }
+      Object.assign(row, {
+        remark,
+      })
+    },
   },
   actions: {
+    selectArea: ({ commit }, { areaId, detailId }) => {
+      queryAreaProdList(areaId)
+        .then((list) => {
+          commit('setAreaId', { detailId, areaId, list })
+        })
+        .catch(() => {
+          commit('setAreaId', { detailId })
+        })
+    },
     persistRecord: () => {
       console.log('persistRecord')
       return

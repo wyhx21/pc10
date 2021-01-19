@@ -8,10 +8,10 @@
       <a-row class="app-store-persist-main_header">
         <a-col :span="4">仓库区域</a-col>
         <a-col :span="4">选择商品</a-col>
-        <a-col :span="4">商品库存</a-col>
+        <a-col :span="3">商品库存</a-col>
         <a-col :span="4">核销类型</a-col>
-        <a-col :span="4">核销数量</a-col>
-        <a-col :span="3">备注信息</a-col>
+        <a-col :span="3">核销数量</a-col>
+        <a-col :span="5">备注信息</a-col>
         <a-col :span="1">
           <a v-if="detailDisabled" @click="addRecord"><PlusCircleOutlined /></a>
         </a-col>
