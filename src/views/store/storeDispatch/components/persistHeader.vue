@@ -1,5 +1,5 @@
 <template>
-  <table class="app-store-dispatch-persist-header">
+  <table class="app-store-persist-header">
     <tr>
       <td width="50%">
         <div>调出仓库</div>

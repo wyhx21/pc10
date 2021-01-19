@@ -1,5 +1,5 @@
 <template>
-  <table class="app-store-verify-persist-header">
+  <table class="app-store-persist-header">
     <tr>
       <td width="50%">
         <div>选择仓库</div>

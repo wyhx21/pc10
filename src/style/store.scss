@@ -1,0 +1,41 @@
+@import '@style/variable.scss';
+.app-store-persist-header {
+  width: calc(100% - 40px);
+  margin: 0 20px 5px 20px;
+
+  td {
+    padding: 5px;
+    & > div {
+      display: inline-block;
+      margin: 0 5px;
+    }
+  }
+}
+
+.app-store-persist {
+  margin: 0 10px;
+  height: 100%;
+
+  .app-store-persist-main_header {
+    text-align: center;
+    font-weight: 900;
+    height: 25px;
+    line-height: 25px;
+  }
+
+  .app-store-persist-main_main {
+    height: calc(100% - 25px);
+    overflow: auto;
+
+    .app-store-persist-main_placeholder {
+      text-align: center;
+      color: $app-main-font-placeholder;
+      line-height: 30px;
+    }
+
+    .app-store-persist-main_row {
+      text-align: center;
+      line-height: 30px;
+    }
+  }
+}

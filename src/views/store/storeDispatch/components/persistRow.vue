@@ -1,5 +1,5 @@
 <template>
-  <a-row class="app-store-dispatch-persist-main_row">
+  <a-row class="app-store-persist-main_row">
     <a-col :span="4">
       <a-select
         :value="data['sourceAreaId']"

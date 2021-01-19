@@ -4,8 +4,8 @@
       <app-header />
     </template>
 
-    <div class="app-store-verify-persist">
-      <a-row class="app-store-verify-persist-main_header">
+    <div class="app-store-persist">
+      <a-row class="app-store-persist-main_header">
         <a-col :span="4">仓库区域</a-col>
         <a-col :span="4">选择商品</a-col>
         <a-col :span="4">商品库存</a-col>
@@ -17,17 +17,14 @@
         </a-col>
       </a-row>
 
-      <div class="app-store-verify-persist-main_main">
+      <div class="app-store-persist-main_main">
         <div v-for="item of detailList" :key="item['detailId']">
           <app-row :data="item" />
         </div>
-        <div
-          v-if="!detailDisabled"
-          class="app-store-verify-persist-main_placeholder"
-        >
+        <div v-if="!detailDisabled" class="app-store-persist-main_placeholder">
           请选择仓库及核销分类
         </div>
-        <div v-else class="app-store-verify-persist-main_placeholder">
+        <div v-else class="app-store-persist-main_placeholder">
           <a @click="addRecord">点击添加记录</a>
         </div>
       </div>
@@ -61,45 +58,5 @@
   }
 </script>
 <style lang="scss">
-  @import '@style/variable.scss';
-  .app-store-verify-persist-header {
-    width: calc(100% - 40px);
-    margin: 0 20px 5px 20px;
-
-    td {
-      padding: 5px;
-      & > div {
-        display: inline-block;
-        margin: 0 5px;
-      }
-    }
-  }
-
-  .app-store-verify-persist {
-    margin: 0 10px;
-    height: 100%;
-
-    .app-store-verify-persist-main_header {
-      text-align: center;
-      font-weight: 900;
-      height: 25px;
-      line-height: 25px;
-    }
-
-    .app-store-verify-persist-main_main {
-      height: calc(100% - 25px);
-      overflow: auto;
-
-      .app-store-verify-persist-main_placeholder {
-        text-align: center;
-        color: $app-main-font-placeholder;
-        line-height: 30px;
-      }
-
-      .app-store-verify-persist-main_row {
-        text-align: center;
-        line-height: 30px;
-      }
-    }
-  }
+  @import '@style/store.scss';
 </style>
