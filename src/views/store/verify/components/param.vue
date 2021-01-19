@@ -1,7 +1,7 @@
 <template>
   <a-form layout="inline" :model="params" class="app-param-form_1">
-    <a-form-item label="核销类型">
-      <a-select v-model:value="params.verifiCode" placeholder="核销类型">
+    <a-form-item label="核销分类">
+      <a-select v-model:value="params.verifiCode" placeholder="核销分类">
         <a-select-option v-for="item in typeList" :key="item['code']">
           {{ item['value'] }}
         </a-select-option>

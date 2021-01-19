@@ -18,7 +18,7 @@
         </tr>
         <tr>
           <td>
-            <span>分类:</span>
+            <span>核销分类:</span>
             <span>{{ currentData['verifiValue'] }}</span>
           </td>
           <td>
