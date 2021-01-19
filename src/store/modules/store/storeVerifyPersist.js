@@ -1,5 +1,7 @@
 import { queryAreaProdList } from '@axios/store/storeProd.js'
 import { Message } from '@utils/messagerUtil.js'
+import { orderPersist } from '@axios/store/storeVerify.js'
+
 export default {
   namespaced: true,
   state: {
@@ -156,9 +158,21 @@ export default {
           commit('setAreaId', { detailId })
         })
     },
-    persistRecord: () => {
-      console.log('persistRecord')
-      return
+    persistRecord: ({ getters }) => {
+      const details = getters.detailList.map((item) => {
+        const { areaId, storeProdId, verifiType, prodNum, remark } = item
+        return { areaId, storeProdId, verifiType, prodNum, remark }
+      })
+      const storeId = getters.storeId
+      const verifiCode = getters.verifyCode
+      const remark = getters.remark
+      const param = {
+        details,
+        storeId,
+        verifiCode,
+        remark,
+      }
+      return orderPersist(param)
     },
   },
 }
