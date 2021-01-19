@@ -4,14 +4,15 @@ export default {
     storeId: '',
     verifyCode: '',
     remark: '',
-    details: [],
+    detailList: [],
+    maxDetailId: 0,
   },
   getters: {
     storeId: (_state) => _state.storeId,
     verifyCode: (_state) => _state.verifyCode,
     remark: (_state) => _state.remark,
-    details: (_state) => _state.details,
-    selecDisable: (_state) => _state.details.length > 0,
+    detailList: (_state) => _state.detailList,
+    selecDisable: (_state) => _state.detailList.length > 0,
     detailDisabled: (_state) => {
       if (_state.storeId && _state.verifyCode) {
         return true
@@ -24,12 +25,24 @@ export default {
       _state.storeId = null
       _state.verifyCode = null
       _state.remark = ''
-      _state.details = []
+      _state.detailList = []
+      _state.maxDetailId = 0
     },
     storeId: (_state, val) => (_state.storeId = val),
     verifyCode: (_state, val) => (_state.verifyCode = val),
     remark: (_state, val = '') => (_state.remark = val),
-    details: (_state, val = []) => (_state.details = val),
+    detailList: (_state, val = []) => (_state.detailList = val),
+
+    addRecord: (_state) => {
+      _state.maxDetailId++
+      const detailId = _state.maxDetailId
+      _state.detailList.push({ detailId, keyIndex: 0 })
+    },
+    deleteRecord: (_state, detailId) => {
+      _state.detailList = _state.detailList.filter(
+        (item) => item['detailId'] != detailId
+      )
+    },
   },
   actions: {
     persistRecord: () => {

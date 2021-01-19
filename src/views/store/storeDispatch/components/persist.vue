@@ -39,7 +39,7 @@
   import AppHeader from './persistHeader'
   import AppRow from './persistRow'
   import { PlusCircleOutlined } from '@ant-design/icons-vue'
-  import { mapGetters, mapActions, mapMutations } from 'vuex'
+  import { mapGetters, mapMutations } from 'vuex'
   export default {
     components: {
       AppContainer,
@@ -58,10 +58,8 @@
     },
     methods: {
       ...mapMutations({
-        setDetailList: 'appStore/storeDispatch/persist/detailList',
         addRecord: 'appStore/storeDispatch/persist/addRecord',
       }),
-      ...mapActions({}),
     },
   }
 </script>
