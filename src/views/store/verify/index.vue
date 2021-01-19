@@ -107,7 +107,7 @@
           { title: '仓库编码', dataIndex: 'storeCode', width: 150 },
           { title: '仓库名称', dataIndex: 'storeName', width: 150 },
           { title: '订单状态', dataIndex: 'verifiStatusValue', width: 150 },
-          { title: '核销类型', dataIndex: 'verifiValue', width: 150 },
+          { title: '分类', dataIndex: 'verifiValue', width: 150 },
           { title: '备注', dataIndex: 'remark', ellipsis: true },
           { title: '更新人', dataIndex: 'lastModifiedBy', width: 150 },
           { title: '更新时间', dataIndex: 'lastModifiedDate', width: 160 },

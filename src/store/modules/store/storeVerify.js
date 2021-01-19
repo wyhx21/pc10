@@ -1,4 +1,9 @@
-import { queryPage, queryDetail } from '@axios/store/storeVerify.js'
+import {
+  queryPage,
+  queryDetail,
+  orderConfirm,
+  orderDelete,
+} from '@axios/store/storeVerify.js'
 import { verifyTypeList } from '@axios/dict/verifyType.js'
 
 export default {
@@ -107,6 +112,14 @@ export default {
           commit('detailList', res)
         })
         .catch(() => {})
+    },
+    deleteRecord: async ({ getters }) => {
+      const { id } = getters.currentData
+      return orderDelete(id)
+    },
+    confirmRecord: async ({ getters }) => {
+      const { id } = getters.currentData
+      return orderConfirm(id)
     },
     //
   },
