@@ -50,7 +50,7 @@
       :maskClosable="false"
       v-model:visible="visible.detail"
     >
-      <app-detail @cancel="visible.detail = false" />
+      <app-detail @cancel="visible.detail = false" @refresh="refreshData" />
     </app-modal>
     <!-- 详情 end -->
   </app-container>
@@ -97,6 +97,7 @@
       return {
         loading: {
           query: false,
+          persist: false,
         },
         visible: {
           detail: false,
@@ -138,6 +139,11 @@
       },
       onPageChange(page, size) {
         this.pageInfo({ page, size })
+        this.queryData()
+      },
+      refreshData() {
+        this.visible.detail = false
+        this.visible.persist = false
         this.queryData()
       },
       queryData() {
