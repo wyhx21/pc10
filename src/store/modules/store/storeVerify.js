@@ -1,16 +1,8 @@
-import {
-  queryPage,
-  queryDetail,
-  mergeRecord,
-  deleteRecord,
-} from '@axios/store/storeDispatch.js'
-import persist from './storeDispatchPersist.js'
+import { queryPage, queryDetail } from '@axios/store/storeVerify.js'
+import { verifyTypeList } from '@axios/dict/verifyType.js'
 
 export default {
   namespaced: true,
-  modules: {
-    persist,
-  },
   state: {
     pageInfo: {
       page: 1,
@@ -21,46 +13,52 @@ export default {
       toalPage: 2,
     },
     params: {
-      disPacherStatus: '',
       orderNo: '',
-      sourceStoreId: '',
-      toStoreId: '',
+      storeId: '',
+      verifiCode: '',
+      verifiStatus: '',
     },
     dataList: [],
     currentData: {},
     detailList: [],
+    verifyTypeList: [],
   },
   getters: {
+    verifyTypeList: (_state) => _state.verifyTypeList,
+    allVerifyTypeList: (_state) => {
+      const all = { code: '', value: '全部' }
+      return [all, ..._state.verifyTypeList]
+    },
     dataList: (_state) => _state.dataList,
-    detailList: (_state) => _state.detailList,
     params: (_state) => _state.params,
     pageInfo: (_state) => _state.pageInfo,
     currentData: (_state) => _state.currentData,
     totalPageSize: (_state) => _state.pageResult.total,
     currentPage: (_state) => _state.pageInfo.page,
+    detailList: (_state) => _state.detailList,
     perPersist: (_state, _getters, _rootState, _rootGetters) => {
       const arr = _rootGetters['appSystem/userRoleAuth/pageRoleAuth'](
-        'store_dispather'
+        'store_verifi'
       )
-      return arr.includes('store_dispather_persist')
-    },
-    perMerge: (_state, _getters, _rootState, _rootGetters) => {
-      const arr = _rootGetters['appSystem/userRoleAuth/pageRoleAuth'](
-        'store_dispather'
-      )
-      return arr.includes('store_dispather_merge')
-    },
-    perDelete: (_state, _getters, _rootState, _rootGetters) => {
-      const arr = _rootGetters['appSystem/userRoleAuth/pageRoleAuth'](
-        'store_dispather'
-      )
-      return arr.includes('store_dispather_delete')
+      return arr.includes('store_verifi_persist')
     },
     perDetail: (_state, _getters, _rootState, _rootGetters) => {
       const arr = _rootGetters['appSystem/userRoleAuth/pageRoleAuth'](
-        'store_dispather'
+        'store_verifi'
       )
-      return arr.includes('store_dispather_detail')
+      return arr.includes('store_verifi_detail')
+    },
+    perConfirm: (_state, _getters, _rootState, _rootGetters) => {
+      const arr = _rootGetters['appSystem/userRoleAuth/pageRoleAuth'](
+        'store_verifi'
+      )
+      return arr.includes('store_verifi_confirm')
+    },
+    perDelete: (_state, _getters, _rootState, _rootGetters) => {
+      const arr = _rootGetters['appSystem/userRoleAuth/pageRoleAuth'](
+        'store_verifi'
+      )
+      return arr.includes('store_verifi_delete')
     },
   },
   mutations: {
@@ -73,10 +71,20 @@ export default {
     },
     queryParam: (_state, params = {}) => (_state.params = params),
     dataList: (_state, list = []) => (_state.dataList = list),
-    detailList: (_state, list = []) => (_state.detailList = list),
     currentData: (_state, data = {}) => (_state.currentData = data),
+    detailList: (_state, list = []) => (_state.detailList = list),
+    verifyTypeList: (_state, list = []) => (_state.verifyTypeList = list),
   },
   actions: {
+    verifyTypeList: async ({ commit }) => {
+      verifyTypeList()
+        .then((res) => {
+          commit('verifyTypeList', res)
+        })
+        .catch(() => {
+          commit('verifyTypeList')
+        })
+    },
     queryPage: async ({ commit, getters }) => {
       commit('dataList')
       return new Promise((resolve, reject) => {
@@ -100,13 +108,6 @@ export default {
         })
         .catch(() => {})
     },
-    deleteRecord: async ({ getters }) => {
-      const { id } = getters.currentData
-      return deleteRecord(id)
-    },
-    confirmRecord: async ({ getters }) => {
-      const { id } = getters.currentData
-      return mergeRecord(id)
-    },
+    //
   },
 }

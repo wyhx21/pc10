@@ -8,4 +8,6 @@ const mergeRecord = (data) => axios.doPost(`/system/dic/verifyType/merge`, data)
 const persistRecord = (data) =>
   axios.doPost(`/system/dic/verifyType/persist`, data)
 
-export { queryPage, mergeRecord, persistRecord }
+const verifyTypeList = () => axios.doGet(`/system/dic/sysDic/verifiType`)
+
+export { queryPage, mergeRecord, persistRecord, verifyTypeList }

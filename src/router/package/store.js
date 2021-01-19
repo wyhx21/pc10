@@ -46,6 +46,15 @@ const store = [
         },
       },
       {
+        path: 'verifi',
+        name: '库存核销',
+        component: () => import('@/views/store/verify'),
+        meta: {
+          title: '库存核销',
+          id: 300002006,
+        },
+      },
+      {
         path: 'storeProd',
         name: '库存信息',
         component: () => import('@/views/store/storeProd'),
