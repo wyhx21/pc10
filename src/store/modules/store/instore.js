@@ -1,5 +1,8 @@
 import { queryPage, queryDetail, mergeRecord } from '@axios/store/instore.js'
-import { queryAreaProdNum } from '@axios/store/storeProd.js'
+import {
+  queryAreaProdNum,
+  queryOrderStoreDetail,
+} from '@axios/store/storeProd.js'
 
 export default {
   namespaced: true,
@@ -15,11 +18,13 @@ export default {
     params: {
       cusCode: '',
       orderNo: '',
+      orderStatus: '',
     },
     dataList: [],
     currentData: {},
     storeId: '',
     detailList: [],
+    details: [],
   },
   getters: {
     dataList: (_state) => _state.dataList,
@@ -30,11 +35,18 @@ export default {
     currentPage: (_state) => _state.pageInfo.page,
     storeId: (_state) => _state.storeId,
     detailList: (_state) => _state.detailList,
+    details: (_state) => _state.details,
     perMerge: (_state, _getters, _rootState, _rootGetters) => {
       const arr = _rootGetters['appSystem/userRoleAuth/pageRoleAuth'](
         'store_instore'
       )
       return arr.includes('store_instore_handle')
+    },
+    perDetail: (_state, _getters, _rootState, _rootGetters) => {
+      const arr = _rootGetters['appSystem/userRoleAuth/pageRoleAuth'](
+        'store_instore'
+      )
+      return arr.includes('store_instore_detail')
     },
   },
   mutations: {
@@ -49,6 +61,7 @@ export default {
     dataList: (_state, list = []) => (_state.dataList = list),
     currentData: (_state, data = {}) => (_state.currentData = data),
     detailList: (_state, list = []) => (_state.detailList = list),
+    details: (_state, list = []) => (_state.details = list),
     storeId: (_state, storeId) => {
       _state.detailList.map((item) => {
         delete item['areaId']
@@ -88,6 +101,16 @@ export default {
       queryDetail(id)
         .then((list) => {
           commit('detailList', list)
+        })
+        .catch(() => {})
+    },
+    queryOrderStoreDetail: async ({ commit, getters }) => {
+      const detailType = 0
+      const { orderNo } = getters.currentData
+      commit('details')
+      queryOrderStoreDetail({ detailType, orderNo })
+        .then((res) => {
+          commit('details', res)
         })
         .catch(() => {})
     },

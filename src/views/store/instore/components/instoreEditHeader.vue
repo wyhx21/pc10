@@ -16,6 +16,10 @@
     </tr>
     <tr>
       <td>
+        <span>订单状态:</span>
+        <span>{{ data['statusValue'] }}</span>
+      </td>
+      <td>
         <span>更新时间:</span>
         <span>{{ data['lastModifiedDate'] }}</span>
       </td>

@@ -31,7 +31,7 @@
 </template>
 <script>
   import AppContainer from '@com/flexContainer'
-  import AppHeader from './detailHeader'
+  import AppHeader from './instoreEditHeader'
   import { mapGetters, mapActions } from 'vuex'
   export default {
     components: {

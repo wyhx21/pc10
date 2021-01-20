@@ -17,6 +17,7 @@
           ok-text="确认"
           cancel-text="取消"
           @confirm="onConfirm"
+          v-if="saveButton"
         >
           <a-button type="primary" size="small" :loading="loading">
             {{ saveButton }}

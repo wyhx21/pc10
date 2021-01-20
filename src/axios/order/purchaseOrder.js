@@ -19,7 +19,7 @@ const detailOrder = (orderId) =>
   axios.doGet(`/orderInfo/orderDetail/purchase/${orderId}`)
 
 const detailStore = (orderId) =>
-  axios.doGet(`/store/storeProdDetail/orderNo/${orderId}`)
+  axios.doGet(`/store/storeProdDetail/orderStoreDetail/0/${orderId}`)
 
 const supplierPage = (param, page) =>
   axios.doPost('/basic/supplier/supplier', param, page)
