@@ -69,7 +69,6 @@
     <!-- 详情 begin -->
     <app-modal
       v-model:visible="visible.detail"
-      :loading="loading.merge"
       :saveButton="null"
       title="入库详情"
       width="800px"

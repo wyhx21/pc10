@@ -32,7 +32,7 @@
 </template>
 <script>
   import AppContainer from '@com/flexContainer'
-  import AppHeader from './detailHeader'
+  import AppHeader from './outstoreEditHeader'
   import { mapGetters, mapActions } from 'vuex'
   export default {
     components: {
