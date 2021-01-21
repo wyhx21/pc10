@@ -6,9 +6,7 @@ const setting = {
   publicPath: process.env.NODE_ENV === 'development' ? '/' : '/PC/',
   //生产环境构建文件的目录名
   outputDir:
-    process.env.NODE_ENV === 'development'
-      ? 'dist'
-      : 'C:/Users/w/Desktop/demo/web/app/PC',
+    process.env.NODE_ENV === 'development' ? 'dist' : 'D:/demo/web/app/PC',
   //放置生成的静态资源 (js、css、img、fonts) 的 (相对于 outputDir 的) 目录。
   assetsDir: 'static',
   //开发环境每次保存时是否输出为eslint编译警告

@@ -8,6 +8,7 @@ import appDict from './modules/appDict.js'
 import appBasic from './modules/appBasic.js'
 import appStore from './modules/appStore.js'
 import appOrder from './modules/appOrder.js'
+import appSystemMsg from './modules/appSystemMsg.js'
 
 const store = createStore({
   modules: {
@@ -15,6 +16,7 @@ const store = createStore({
     appSetting,
     appSystem,
     appSystemInfo,
+    appSystemMsg,
     appDict,
     appBasic,
     appStore,

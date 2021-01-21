@@ -6,6 +6,7 @@ import dict from './package/dict.js'
 import basic from './package/basic.js'
 import store from './package/store.js'
 import order from './package/order.js'
+import systemMsg from './package/systemMsg.js'
 
 const routdefault = createRouter({
   history: createWebHashHistory(),
@@ -17,6 +18,7 @@ const routdefault = createRouter({
     ...basic,
     ...store,
     ...order,
+    ...systemMsg,
   ],
 })
 
