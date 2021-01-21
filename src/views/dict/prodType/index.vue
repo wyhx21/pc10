@@ -91,8 +91,8 @@
   import AppPagination from '@com/pagination'
   import AppSwitch from '@com/switch'
   import AppModal from '@com/modal'
-  import AppEdit from './omponents/prodTypeEdit'
-  import AppPersist from './omponents/prodTypePersist'
+  import AppEdit from './components/prodTypeEdit'
+  import AppPersist from './components/prodTypePersist'
   import {
     RedoOutlined,
     SearchOutlined,
