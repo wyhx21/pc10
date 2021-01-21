@@ -54,7 +54,7 @@
           v-if="perMerge && perDelete && record.roleType == 2"
         />
         <a-popconfirm
-          title="确认删除该记录新增？"
+          title="确认删除该记录？"
           ok-text="确认"
           cancel-text="取消"
           v-if="perDelete && record.roleType == 2"
