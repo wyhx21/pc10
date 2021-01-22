@@ -12,4 +12,8 @@ const roleChange = (roleId) => axios.doGet(`/system/role/change/${roleId}`)
 // 切换角色
 const userLogout = () => axios.doGet(`/system/user/logout`)
 
-export { login, userRole, userMenu, userAuth, roleChange, userLogout }
+// 获取消息
+const queryMsg = ({ page = 1, size = 10 } = {}) =>
+  axios.doGet(`/system/message/mainMsg/2`, { page, size })
+
+export { login, userRole, userMenu, userAuth, roleChange, userLogout, queryMsg }

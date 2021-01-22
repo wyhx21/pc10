@@ -50,7 +50,7 @@
     },
     methods: {
       ...mapActions({
-        delOthersVisitedRoutes: 'tagsBar/delOthersVisitedRoutes',
+        delOthersVisitedRoutes: 'appSetting/tagsBar/delOthersVisitedRoutes',
       }),
       timeChange() {
         this.timer = setInterval(() => {
