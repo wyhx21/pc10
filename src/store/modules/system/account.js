@@ -1,10 +1,9 @@
 import { login, userLogout } from '@axios/system/account.js'
 import { notification } from '@utils/messagerUtil.js'
-import { title, avatar } from '@/config'
+import { title } from '@/config'
 export default {
   namespaced: true,
   state: {
-    avatar,
     roleId: null,
     roleType: null,
     sysId: null,
@@ -19,7 +18,6 @@ export default {
     },
     userName: (_state) => _state.userName,
     token: (_state) => _state.token,
-    avatar: (_state) => _state.avatar,
   },
   mutations: {
     // 登录信息

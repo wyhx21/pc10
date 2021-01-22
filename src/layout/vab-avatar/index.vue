@@ -2,7 +2,7 @@
   <div class="vab-avatar">
     <a-dropdown>
       <span class="ant-dropdown-link">
-        <a-avatar :src="avatar" />
+        <img class="vab-avatar_img" src="@/assets/head.gif" />
         {{ username }}
         <DownOutlined />
       </span>
@@ -34,7 +34,6 @@
     components: { DownOutlined },
     computed: {
       ...mapGetters({
-        avatar: 'appSystem/account/avatar',
         username: 'appSystem/account/userName',
       }),
     },
@@ -61,6 +60,12 @@
       display: block;
       min-height: 64px;
       cursor: pointer;
+    }
+
+    .vab-avatar_img {
+      width: 32px;
+      height: 32px;
+      border-radius: 32px;
     }
   }
 </style>

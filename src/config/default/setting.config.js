@@ -15,8 +15,6 @@ const setting = {
   transpileDependencies: ['vue-echarts', 'resize-detector'],
   //默认的接口地址 如果是开发环境和生产环境走vab-mock-server，当然你也可以选择自己配置成需要的接口地址
   baseURL: '/api',
-  // 用户头像
-  avatar: 'https://i.gtimg.cn/club/item/face/img/2/15922_100.gif',
   //标题 （包括初次加载雪花屏的标题 页面的标题 浏览器的标题）
   title: '进销存管理系统',
   //标题分隔符
