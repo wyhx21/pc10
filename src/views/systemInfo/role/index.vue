@@ -315,6 +315,10 @@
       },
       deleteRecord({ id }) {
         this.dataDelete(id)
+          .then(() => {
+            this.queryData()
+          })
+          .catch(() => {})
       },
       onPageChange(page, size) {
         this.pageInfo({ page, size })
