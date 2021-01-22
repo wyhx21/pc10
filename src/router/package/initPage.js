@@ -14,7 +14,7 @@ const hone = [
       {
         path: 'index',
         name: 'Index',
-        component: () => import('@/views/system/index'),
+        component: () => import('@/views/systemInfo/index'),
         meta: {
           title: '首页',
           icon: 'home-4-line',
