@@ -41,6 +41,11 @@ export default {
       }
       return auth1
     },
+    systemName: (_state, _getters, _rootState, _rootGetters) => {
+      const sysId = _rootGetters['appSystem/account/sysId']
+      const [system] = _state.roleInfo.filter((item) => item['code'] == sysId)
+      return system?.value
+    },
   },
   mutations: {
     roleInfo: (_state, roleInfo = []) => (_state.roleInfo = roleInfo),

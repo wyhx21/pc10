@@ -1,6 +1,6 @@
 import router from '@router'
 import store from '@store'
-import { title, titleReverse, titleSeparator } from '@/config'
+import { titleReverse, titleSeparator } from '@/config'
 
 router.beforeEach(async (to, from, next) => {
   if (to.path === '/login') {
@@ -19,6 +19,7 @@ router.afterEach((to) => {
 })
 
 const getPageTitle = (to) => {
+  const title = store.getters['appSystem/userRoleAuth/systemName']
   const pageTitle = to?.meta?.title
   let newTitles = []
   if (pageTitle) newTitles.push(pageTitle)
