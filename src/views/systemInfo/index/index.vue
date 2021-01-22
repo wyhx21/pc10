@@ -17,8 +17,12 @@
         :xl="6"
         v-for="item of msgList"
         :key="item['id']"
+        @click="currentId = item['id']"
       >
-        <app-msg-item :data="item" />
+        <app-msg-item
+          :data="item"
+          :class="{ 'app-msg-item_cur': item['id'] == currentId }"
+        />
       </a-col>
     </a-row>
   </div>
@@ -38,6 +42,7 @@
     data() {
       return {
         updateTime: process.env.VUE_APP_UPDATE_TIME,
+        currentId: null,
       }
     },
     beforeMount() {
@@ -64,6 +69,11 @@
       border: 2px solid $app-main-border-color;
       border-radius: 10px;
       padding: 5px;
+    }
+
+    .app-msg-item_cur {
+      border-style: dotted;
+      border-color: $app-main-border-color_cur;
     }
 
     h4 {
