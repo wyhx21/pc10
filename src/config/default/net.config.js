@@ -7,6 +7,6 @@ const network = {
   //消息框消失时间
   messageDuration: 3000,
   //最长请求时间
-  requestTimeout: 5000,
+  requestTimeout: 15000,
 }
 module.exports = network

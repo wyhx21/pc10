@@ -320,12 +320,14 @@
       },
       editRecord(val) {
         this.setEditData(val)
+        this.loading.merge = false
         this.model.editComponent = 'AppEditor'
         this.model.visible = true
       },
       persistRecord() {
         this.setEditData({ deleted: 0, id: 0 })
         this.setRoleInfo()
+        this.loading.persist = false
         this.persist.visible = true
         this.persist.persistComponent = 'AppPersist'
       },
