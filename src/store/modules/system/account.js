@@ -9,6 +9,11 @@ export default {
     sysId: null,
     userName: null,
     token: null,
+    userInfo: {
+      userCode: '',
+      passWord: '',
+      type: [],
+    },
   },
   getters: {
     roleId: (_state) => _state.roleId,
@@ -18,6 +23,7 @@ export default {
     },
     userName: (_state) => _state.userName,
     token: (_state) => _state.token,
+    userInfo: (_state) => _state.userInfo,
   },
   mutations: {
     // 登录信息
@@ -31,13 +37,24 @@ export default {
       _state.sysId = sysId
     },
     token: (_state, { token } = {}) => (_state.token = token),
+    userInfo: (_state, { userCode, passWord, type = [] } = {}) => {
+      if (type.length < 1) {
+        userCode = ''
+        passWord = ''
+      }
+      _state.userInfo = { userCode, passWord, type }
+    },
   },
   actions: {
     // 登录
-    loginSubmit: async ({ commit }, { userCode = '', passWord = '' } = {}) => {
+    loginSubmit: async (
+      { commit },
+      { userCode = '', passWord = '', type = [] } = {}
+    ) => {
       return new Promise((resolve, reject) => {
         login({ userCode, passWord })
           .then((res) => {
+            commit('userInfo', { userCode, passWord, type })
             commit('loginInfo', res)
             commit('token', res)
             const hour = new Date().getHours()

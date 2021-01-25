@@ -29,6 +29,11 @@
               </a-input>
             </a-form-item>
             <a-form-item>
+              <a-checkbox-group v-model:value="form.type">
+                <a-checkbox :value="true" name="type">记住密码</a-checkbox>
+              </a-checkbox-group>
+            </a-form-item>
+            <a-form-item>
               <a-button
                 type="primary"
                 html-type="submit"
@@ -59,13 +64,25 @@
     data() {
       return {
         form: {
-          userCode: 'admin',
-          passWord: 'admin',
+          userCode: '',
+          passWord: '',
+          type: [],
         },
       }
     },
+    watch: {
+      userInfo: {
+        handler(val) {
+          this.form.userCode = val.userCode
+          this.form.passWord = val.passWord
+          this.form.type = val.type
+        },
+        immediate: true,
+      },
+    },
     computed: {
       ...mapGetters('appSetting/settings', ['logo', 'title']),
+      ...mapGetters('appSystem/account', ['userInfo']),
     },
     methods: {
       ...mapActions('appSystem/account', ['loginSubmit']),
@@ -96,6 +113,14 @@
       background-size: 100% 100%;
       border-radius: 10px;
       box-shadow: 0 2px 8px 0 rgba(7, 17, 27, 0.06);
+
+      .ant-form-item {
+        margin-bottom: 10px;
+
+        .ant-checkbox-wrapper {
+          color: #fff;
+        }
+      }
     }
     &-hello {
       font-size: 32px;

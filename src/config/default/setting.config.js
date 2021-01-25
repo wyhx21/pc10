@@ -3,10 +3,10 @@
  */
 const setting = {
   //开发以及部署时的URL，hash模式时在不确定二级目录名称的情况下建议使用""代表相对路径或者"/二级目录/"，history模式默认使用"/"或者"/二级目录/"
-  publicPath: process.env.NODE_ENV === 'development' ? '/' : '/PC/',
+  publicPath: process.env.NODE_ENV === 'development' ? '/' : '/sit/',
   //生产环境构建文件的目录名
   outputDir:
-    process.env.NODE_ENV === 'development' ? 'dist' : 'D:/demo/web/app/PC',
+    process.env.NODE_ENV === 'development' ? 'dist' : 'D:/demo/web/app/pc/sit',
   //放置生成的静态资源 (js、css、img、fonts) 的 (相对于 outputDir 的) 目录。
   assetsDir: 'static',
   //开发环境每次保存时是否输出为eslint编译警告
@@ -16,7 +16,7 @@ const setting = {
   //默认的接口地址 如果是开发环境和生产环境走vab-mock-server，当然你也可以选择自己配置成需要的接口地址
   baseURL: '/api',
   //标题 （包括初次加载雪花屏的标题 页面的标题 浏览器的标题）
-  title: '进销存管理系统',
+  title: '鸿星管理系统',
   //标题分隔符
   titleSeparator: ' - ',
   //标题是否反转 如果为false:"page - title"，如果为ture:"title - page"
@@ -26,7 +26,7 @@ const setting = {
   //开发环境端口号
   devPort: '9999',
   //开发环境代理
-  proxyTarget: 'http://localhost:8080',
+  proxyTarget: 'http://47.112.116.1',
   //版本号
   version: process.env.VUE_APP_VERSION,
   //pro版本copyright可随意修改
