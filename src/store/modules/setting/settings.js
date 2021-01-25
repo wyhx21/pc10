@@ -11,8 +11,6 @@ const {
   layout,
   header,
   themeName,
-  i18n,
-  showLanguage,
   showProgressBar,
   showRefresh,
   showSearch,
@@ -33,7 +31,6 @@ const getLocalStorage = (key) => {
 
 const theme = getLocalStorage('vue-admin-beautiful-pro-theme')
 const { collapse } = getLocalStorage('vue-admin-beautiful-pro-collapse')
-const { language } = getLocalStorage('vue-admin-beautiful-pro-language')
 const toggleBoolean = (key) => {
   return typeof theme[key] !== 'undefined' ? theme[key] : key
 }
@@ -46,8 +43,6 @@ const state = () => ({
   layout: theme.layout || layout,
   header: theme.header || header,
   device: 'desktop',
-  language: language || i18n,
-  showLanguage: toggleBoolean(showLanguage),
   showProgressBar: toggleBoolean(showProgressBar),
   showRefresh: toggleBoolean(showRefresh),
   showSearch: toggleBoolean(showSearch),
@@ -60,11 +55,9 @@ const getters = {
   collapse: (state) => state.collapse,
   device: (state) => state.device,
   header: (state) => state.header,
-  language: (state) => state.language,
   layout: (state) => state.layout,
   logo: (state) => state.logo,
   title: (state) => state.title,
-  showLanguage: (state) => state.showLanguage,
   showProgressBar: (state) => state.showProgressBar,
   showRefresh: (state) => state.showRefresh,
   showSearch: (state) => state.showSearch,
@@ -90,9 +83,6 @@ const mutations = {
   },
   changeLayout(state, layout) {
     state.layout = layout
-  },
-  handleShowLanguage(state, showLanguage) {
-    state.showLanguage = showLanguage
   },
   handleShowProgressBar(state, showProgressBar) {
     state.showProgressBar = showProgressBar
@@ -121,13 +111,6 @@ const mutations = {
   foldSideBar(state) {
     state.collapse = true
   },
-  changeLanguage(state, language) {
-    localStorage.setItem(
-      'vue-admin-beautiful-pro-language',
-      `{"language":"${language}"}`
-    )
-    state.language = language
-  },
 }
 const actions = {
   toggleCollapse({ commit }) {
@@ -141,9 +124,6 @@ const actions = {
   },
   changeLayout({ commit }, layout) {
     commit('changeLayout', layout)
-  },
-  handleShowLanguage: ({ commit }, showLanguage) => {
-    commit('handleShowLanguage', showLanguage)
   },
   handleShowProgressBar: ({ commit }, showProgressBar) => {
     commit('handleShowProgressBar', showProgressBar)
@@ -171,9 +151,6 @@ const actions = {
   },
   foldSideBar({ commit }) {
     commit('foldSideBar')
-  },
-  changeLanguage: ({ commit }, language) => {
-    commit('changeLanguage', language)
   },
 }
 export default { namespaced: true, state, getters, mutations, actions }
