@@ -7,6 +7,7 @@ import basic from './package/basic.js'
 import store from './package/store.js'
 import order from './package/order.js'
 import systemMsg from './package/systemMsg.js'
+import statistics from './package/statistics.js'
 
 const routdefault = createRouter({
   history: createWebHashHistory(),
@@ -19,6 +20,7 @@ const routdefault = createRouter({
     ...store,
     ...order,
     ...systemMsg,
+    ...statistics,
   ],
 })
 

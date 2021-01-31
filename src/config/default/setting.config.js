@@ -26,7 +26,7 @@ const setting = {
   //开发环境端口号
   devPort: '9999',
   //开发环境代理
-  proxyTarget: 'http://47.112.116.1',
+  proxyTarget: 'http://localhost:8080',
   //版本号
   version: process.env.VUE_APP_VERSION,
   //pro版本copyright可随意修改
